@@ -8,6 +8,7 @@ CREATE TABLE users (
 CREATE TABLE rooms (
   id SERIAL PRIMARY KEY,
   name VARCHAR(30) NOT NULL
+  description VARCHAR(100)
   created_user_id INTEGER REFERENCES users(id)
 );
 

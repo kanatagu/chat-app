@@ -1,9 +1,14 @@
 const express = require('express');
 const http = require('http');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
+const dotenv = require('dotenv');
 const { Server } = require('socket.io');
 const auth = require('./router/auth');
+const rooms = require('./router/room');
 const pool = require('./db');
+
+dotenv.config();
 
 const app = express();
 const server = http.createServer(app);
@@ -11,6 +16,9 @@ const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
+
+// Parse cookies object
+app.use(cookieParser(process.env.JWT_EXPIRES_IN));
 
 app.get('/', async (req, res) => {
   try {
@@ -24,6 +32,7 @@ app.get('/', async (req, res) => {
 
 // Router
 app.use('/api/auth', auth);
+app.use('/api/rooms', rooms);
 
 // Socket.io
 const io = new Server(server, {

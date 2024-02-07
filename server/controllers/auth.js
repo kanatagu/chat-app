@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const pool = require('../db');
 const validateForm = require('../utils/validateForm');
-const { registerSchema, loginSchema } = require('../schema/auth');
+const { authSchema } = require('../schema/auth');
 
 /**
  * @desc     Register user
@@ -14,7 +14,7 @@ const register = async (req, res) => {
 
   try {
     // Validation Check
-    await validateForm(registerSchema, req.body);
+    await validateForm(authSchema, req.body);
 
     // Bcrypt password
     const salt = await bcrypt.genSalt();
@@ -73,7 +73,7 @@ const login = async (req, res) => {
   const { username, password } = req.body;
   try {
     // Validation Check
-    await validateForm(loginSchema, req.body);
+    await validateForm(authSchema, req.body);
 
     // Check username and password match
     const user = await pool.query('SELECT * FROM users WHERE username = $1', [
