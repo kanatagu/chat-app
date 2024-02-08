@@ -1,4 +1,4 @@
-const pool = require('../db');
+const pool = require('../db/pool');
 const validateForm = require('../utils/validateForm');
 const { roomSchema } = require('../schema/room');
 
@@ -19,7 +19,7 @@ const getRooms = async (req, res) => {
 /**
  * @desc     Create room
  * @route    POST /api/rooms
- * @access   Public
+ * @access   Private
  */
 const createRoom = async (req, res) => {
   const client = await pool.connect();
@@ -56,8 +56,8 @@ const createRoom = async (req, res) => {
     console.error('error', error);
     await client.query('ROLLBACK');
 
-    // Validation Error
     if (error.validationError) {
+      // Validation Error
       return res.status(400).json(error.message);
     } else {
       return res.status(500).json({ message: error.message });
@@ -70,7 +70,7 @@ const createRoom = async (req, res) => {
 /**
  * @desc     Update room
  * @route    PUT /api/rooms/:id
- * @access   Public
+ * @access   Private
  */
 const updateRoom = async (req, res) => {
   try {
@@ -79,7 +79,6 @@ const updateRoom = async (req, res) => {
 
     const { name, description } = req.body;
     const { id: roomId } = req.params;
-    const { id: userId } = req.user;
 
     // Update Room
     const updateRoom = await pool.query(
@@ -89,8 +88,8 @@ const updateRoom = async (req, res) => {
 
     res.status(200).json(updateRoom.rows[0]);
   } catch (error) {
-    // Validation Error
     if (error.validationError) {
+      // Validation Error
       return res.status(400).json(error.message);
     } else {
       return res.status(500).json({ message: error.message });
@@ -101,7 +100,7 @@ const updateRoom = async (req, res) => {
 /**
  * @desc     Delete room
  * @route    DELETE /api/rooms/:id
- * @access   Public
+ * @access   Private
  */
 const deleteRoom = async (req, res) => {
   const client = await pool.connect();

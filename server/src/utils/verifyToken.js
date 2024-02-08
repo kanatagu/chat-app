@@ -1,9 +1,9 @@
 const jwt = require('jsonwebtoken');
+const pool = require('../db/pool');
 
-const verifyToken = (req, res, next) => {
+const verifyToken = async (req, res, next) => {
   try {
     const token = req.cookies.token;
-    console.log('token!', token);
     if (!token) {
       return res.status(401).json({ token: null });
     }
@@ -14,9 +14,19 @@ const verifyToken = (req, res, next) => {
       return res.status(401).json({ message: 'Invalid token' });
     }
 
+    // Check DB for user
+    const user = await pool.query(
+      'SELECT id, username FROM users WHERE id = $1',
+      [verified.id]
+    );
+
+    if (!user.rows[0]) {
+      return res.status(401).json({ message: 'User not found' });
+    }
+
     req.user = {
-      id: verified.id,
-      username: verified.username,
+      id: user.rows[0].id,
+      username: user.rows[0].username,
     };
 
     next();

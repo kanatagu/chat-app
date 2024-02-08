@@ -4,9 +4,11 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
 const { Server } = require('socket.io');
-const auth = require('./router/auth');
-const rooms = require('./router/room');
-const pool = require('./db');
+const pool = require('./db/pool');
+const authRouter = require('./router/auth');
+const roomRouter = require('./router/room');
+const userRouter = require('./router/user');
+const messageRouter = require('./router/message');
 
 dotenv.config();
 
@@ -31,8 +33,10 @@ app.get('/', async (req, res) => {
 });
 
 // Router
-app.use('/api/auth', auth);
-app.use('/api/rooms', rooms);
+app.use('/api/auth', authRouter);
+app.use('/api/rooms', roomRouter);
+app.use('/api/user', userRouter);
+app.use('/api/messages', messageRouter);
 
 // Socket.io
 const io = new Server(server, {
