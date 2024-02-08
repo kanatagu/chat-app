@@ -1,5 +1,5 @@
 import { Navigate, Outlet } from 'react-router-dom';
-import { Flex, Box } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 import { useAuthContext } from '../../providers';
 
 export const PrivateLayout = () => {
@@ -10,8 +10,7 @@ export const PrivateLayout = () => {
   }
 
   return (
-    <Flex direction='column' align='center' justify='center' minH='100vh'>
-      <Box>Header</Box>
+    <Flex direction='column' minH='100vh'>
       <Outlet />
     </Flex>
   );
