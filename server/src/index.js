@@ -16,7 +16,18 @@ const app = express();
 const server = http.createServer(app);
 const PORT = process.env.PORT || 3000;
 
-app.use(cors());
+app.use(
+  cors({
+    origin: 'http://localhost:5173',
+    credentials: true,
+    allowedHeaders: [
+      'set-cookie',
+      'Content-Type',
+      'Access-Control-Allow-Origin',
+      'Access-Control-Allow-Credentials',
+    ],
+  })
+);
 app.use(express.json());
 
 // Parse cookies object

@@ -51,9 +51,11 @@ const register = async (req, res) => {
       maxAge: 24 * 60 * 60 * 1000, // 24H
     });
 
-    return res
-      .status(201)
-      .json({ id: newUser.rows[0].id, username: newUser.rows[0].username });
+    return res.status(201).json({
+      id: newUser.rows[0].id,
+      username: newUser.rows[0].username,
+      rooms: newUser.rows[0].rooms,
+    });
   } catch (error) {
     // Validation Error
     if (error.validationError) {
@@ -108,9 +110,11 @@ const login = async (req, res) => {
       maxAge: 24 * 60 * 60 * 1000, // 24H
     });
 
-    return res
-      .status(200)
-      .json({ id: user.rows[0].id, username: user.rows[0].username });
+    return res.status(200).json({
+      id: user.rows[0].id,
+      username: user.rows[0].username,
+      rooms: user.rows[0].rooms,
+    });
   } catch (error) {
     // Validation Error
     if (error.validationError) {
