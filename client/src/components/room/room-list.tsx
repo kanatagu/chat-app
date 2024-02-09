@@ -2,7 +2,7 @@ import { Box, VStack, Button, useDisclosure, Flex } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { FiHash, FiPlus } from 'react-icons/fi';
 import { useQuery } from '../../hooks/common';
-import { RoomFormModal } from './index';
+import { RoomCreateModal } from './index';
 
 const dummy = [
   {
@@ -44,7 +44,7 @@ export const RoomList = ({ onDrawerClose }: RoomListProps) => {
 
   return (
     <Box>
-      <VStack align='start' mt={{ base: '0px', md: '20px' }} gap={0}>
+      <VStack align='start' mt={{ base: '0px', md: '16px' }} gap={0}>
         {dummy.map((room) => (
           <Flex
             onClick={() => onNavigate(room.id)}
@@ -53,7 +53,7 @@ export const RoomList = ({ onDrawerClose }: RoomListProps) => {
             display='flex'
             alignItems='center'
             fontWeight='bold'
-            fontSize='xl'
+            fontSize='lg'
             gap='8px'
             color={room.id === Number(roomIdQuery) ? 'gray.300' : 'gray.400'}
             bg={room.id === Number(roomIdQuery) ? 'purple.800' : 'gray.800'}
@@ -78,7 +78,7 @@ export const RoomList = ({ onDrawerClose }: RoomListProps) => {
         </Button>
       </Box>
 
-      <RoomFormModal isOpen={isOpen} onClose={onClose} />
+      <RoomCreateModal isOpen={isOpen} onClose={onClose} />
     </Box>
   );
 };

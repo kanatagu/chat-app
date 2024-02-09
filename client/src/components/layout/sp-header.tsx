@@ -19,7 +19,7 @@ export const SpHeader = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <Flex justifyContent='space-between' align='center' px='16px' py='8px'>
+    <Flex justifyContent='space-between' align='center' px='16px' py='4px'>
       <Button bgColor='gray.800' p='0px' onClick={onOpen}>
         <FiMenu size={24} />
       </Button>
@@ -27,7 +27,7 @@ export const SpHeader = () => {
       <ChakraLink
         as={ReactRouterLink}
         to='/'
-        fontSize='2xl'
+        fontSize={{ base: 'xl', md: '2xl' }}
         fontWeight='700'
         color='purple.400'
         display='flex'

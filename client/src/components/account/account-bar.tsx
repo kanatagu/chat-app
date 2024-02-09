@@ -48,7 +48,7 @@ export const AccountBar = () => {
       <Menu>
         <MenuButton
           as={Button}
-          bgColor={{ base: 'transparent', md: 'gray.900' }}
+          bgColor='transparent'
           h={'auto'}
           p={{ base: '0px', md: '10px' }}
           sx={{
@@ -65,7 +65,12 @@ export const AccountBar = () => {
             opacity: '.8',
           }}
         >
-          <Avatar name={dummyUser.username} src={iconSrc} bg={'gray.100'} />
+          <Avatar
+            name={dummyUser.username}
+            src={iconSrc}
+            bg={'gray.300'}
+            size={{ base: 'sm', md: 'md' }}
+          />
           <Box
             fontWeight='bold'
             fontSize='lg'

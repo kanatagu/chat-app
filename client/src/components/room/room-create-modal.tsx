@@ -9,12 +9,12 @@ import {
   Button,
 } from '@chakra-ui/react';
 
-type RoomFormModalProps = {
+type RoomCreateModalProps = {
   isOpen: boolean;
   onClose: () => void;
 };
 
-export const RoomFormModal = ({ isOpen, onClose }: RoomFormModalProps) => {
+export const RoomCreateModal = ({ isOpen, onClose }: RoomCreateModalProps) => {
   return (
     <Modal
       isOpen={isOpen}
