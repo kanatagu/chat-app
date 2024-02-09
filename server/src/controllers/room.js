@@ -3,9 +3,9 @@ const validateForm = require('../utils/validateForm');
 const { roomSchema } = require('../schema/room');
 
 /**
- * @desc     Get room
+ * @desc     Get rooms
  * @route    GET /api/rooms
- * @access   Public
+ * @access   Private
  */
 const getRooms = async (req, res) => {
   try {
@@ -41,13 +41,11 @@ const createRoom = async (req, res) => {
 
     const roomId = newRoom.rows[0].id;
 
-    // Add room to user's rooms
-    const user = await client.query(
-      'UPDATE users SET rooms = array_append(rooms, $1) WHERE id = $2 RETURNING *',
-      [roomId, userId]
+    // Insert data to user_rooms table
+    await client.query(
+      'INSERT INTO user_rooms (user_id, room_id) VALUES ($1, $2)',
+      [userId, roomId]
     );
-
-    if (!user.rows[0]) throw new Error('Failed to update user rooms');
 
     await client.query('COMMIT');
 
@@ -132,12 +130,11 @@ const deleteRoom = async (req, res) => {
       [roomId]
     );
 
-    const deleteRoomFromUser = await client.query(
-      'UPDATE users SET rooms = array_remove(rooms, $1) WHERE id = $2 RETURNING *',
+    // Delete data from user_rooms table
+    await client.query(
+      'DELETE FROM user_rooms WHERE room_id = $1 AND user_id = $2',
       [roomId, userId]
     );
-
-    if (!deleteRoomFromUser.rows[0]) throw new Error('Failed to delete rooms');
 
     await client.query('COMMIT');
     res.status(200).json(deletedRoom.rows[0]);

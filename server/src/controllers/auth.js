@@ -11,8 +11,11 @@ const { authSchema } = require('../schema/auth');
  */
 const register = async (req, res) => {
   const { username, password } = req.body;
+  const client = await pool.connect();
 
   try {
+    await client.query('BEGIN');
+
     // Validation Check
     await validateForm(authSchema, req.body);
 
@@ -21,7 +24,7 @@ const register = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, salt);
 
     // Check if user already exists
-    const existingUser = await pool.query(
+    const existingUser = await client.query(
       'SELECT * FROM users WHERE username = $1',
       [username]
     );
@@ -30,10 +33,31 @@ const register = async (req, res) => {
       return res.status(400).json('User already exists');
     }
 
-    // Insert user into db
-    const newUser = await pool.query(
+    // Insert user into db with array of rooms
+    const newUser = await client.query(
       'INSERT INTO users (username, hashed_password) VALUES ($1, $2) RETURNING *',
       [username, hashedPassword]
+    );
+
+    // Get rooms created by admin
+    const adminUserId = await client.query(
+      'SELECT id FROM users WHERE username = $1',
+      ['admin']
+    );
+
+    const defaultRooms = await client.query(
+      'SELECT id FROM rooms WHERE created_user_id = $1',
+      [adminUserId.rows[0].id]
+    );
+
+    // Insert default rooms data to user_rooms table
+    await Promise.all(
+      defaultRooms.rows.map((room) =>
+        client.query(
+          'INSERT INTO user_rooms (user_id, room_id) VALUES ($1, $2)',
+          [newUser.rows[0].id, room.id]
+        )
+      )
     );
 
     const token = jwt.sign(
@@ -51,18 +75,24 @@ const register = async (req, res) => {
       maxAge: 24 * 60 * 60 * 1000, // 24H
     });
 
+    await client.query('COMMIT');
+
     return res.status(201).json({
       id: newUser.rows[0].id,
       username: newUser.rows[0].username,
       rooms: newUser.rows[0].rooms,
     });
   } catch (error) {
+    await client.query('ROLLBACK');
+
     // Validation Error
     if (error.validationError) {
       return res.status(400).json(error.message);
     } else {
       return res.status(500).json({ message: error.message });
     }
+  } finally {
+    client.release();
   }
 };
 
@@ -125,7 +155,18 @@ const login = async (req, res) => {
   }
 };
 
+/**
+ * @desc     Logout user
+ * @route    GET /api/auth/logout
+ * @access   Public
+ */
+const logout = (req, res) => {
+  res.clearCookie('token');
+  return res.status(200).json({ message: 'Logout successfully' });
+};
+
 module.exports = {
   register,
   login,
+  logout,
 };

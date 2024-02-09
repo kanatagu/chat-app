@@ -13,6 +13,7 @@ import { FiLogOut } from 'react-icons/fi';
 import { useAuthContext } from '../../providers';
 import defaultIcon from '../../assets/account-icon/default.svg';
 import { AccountModal } from './index';
+import { useLogout } from '../../hooks/auth';
 
 const dummyUser = {
   username: 'John Doe',
@@ -22,11 +23,10 @@ const dummyUser = {
 };
 
 export const AccountBar = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const [iconSrc, setIconSrc] = useState(defaultIcon);
   const { currentUser } = useAuthContext();
-  const { isOpen, onOpen, onClose } = useDisclosure();
-
-  console.log(iconSrc);
+  const { logout, isMutating } = useLogout();
 
   useEffect(() => {
     const fetchIcon = async () => {
@@ -35,7 +35,6 @@ export const AccountBar = () => {
       const icon = dummyUser.image_icon;
 
       import(`../../assets/account-icon/${icon}.jpg`).then((module) => {
-        console.log('module', module.default);
         setIconSrc(module.default);
       });
     };
@@ -82,6 +81,8 @@ export const AccountBar = () => {
         <MenuList>
           <MenuItem onClick={onOpen}>Profile</MenuItem>
           <MenuItem
+            onClick={logout}
+            isDisabled={isMutating}
             gap='8px'
             sx={{
               svg: {

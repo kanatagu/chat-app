@@ -1,39 +1,23 @@
 import { useNavigate } from 'react-router-dom';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
 import { useToast, useBoolean } from '@chakra-ui/react';
-import { authSchema, AuthSchema } from '../../schema';
-import { loginApi } from '../../api/auth';
-import { isErrorWithMessage } from '../../utils';
+import { logoutApi } from '../../api/auth';
 import { useAuthContext } from '../../providers';
+import { isErrorWithMessage } from '../../utils';
 
-export const useLogin = () => {
+export const useLogout = () => {
   const navigate = useNavigate();
+  const [isMutating, setIsMutating] = useBoolean();
   const toast = useToast();
   const { setCurrentUser } = useAuthContext();
-  const [isMutating, setIsMutating] = useBoolean();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<AuthSchema>({
-    resolver: zodResolver(authSchema),
-  });
-
-  const login = async (data: AuthSchema) => {
+  const logout = async () => {
     try {
       setIsMutating.on();
 
-      const res = await loginApi({
-        username: data.username,
-        password: data.password,
-      });
-
-      setCurrentUser(res.data);
-
+      await logoutApi();
+      setCurrentUser(null);
+      navigate('/login');
       setIsMutating.off();
-      navigate('/');
     } catch (error) {
       let errorMessage = 'Sorry, error has occurred. Try again later.';
 
@@ -56,10 +40,5 @@ export const useLogin = () => {
     }
   };
 
-  return {
-    register,
-    onLoginSubmit: handleSubmit(login),
-    errors,
-    isMutating,
-  };
+  return { logout, isMutating };
 };

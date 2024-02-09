@@ -22,7 +22,6 @@ export const MessageItem = ({
       if (!iconName) return;
 
       import(`../../assets/account-icon/${iconName}.jpg`).then((module) => {
-        console.log('module', module.default);
         setIconSrc(module.default);
       });
     };

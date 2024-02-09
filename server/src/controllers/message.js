@@ -9,7 +9,6 @@ const { messageSchema } = require('../schema/message');
  */
 const getMessages = async (req, res) => {
   const { roomId } = req.query;
-  console.log('roomId', roomId);
 
   if (!roomId) return res.status(400).json('Room ID is required');
 
