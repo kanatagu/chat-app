@@ -1,14 +1,14 @@
 import { useNavigate } from 'react-router-dom';
 import { useToast, useBoolean } from '@chakra-ui/react';
 import { logoutApi } from '../../api/auth';
-import { useAuthContext } from '../../providers';
 import { isErrorWithMessage } from '../../utils';
+import { useAuthStore } from '../../store';
 
 export const useLogout = () => {
   const navigate = useNavigate();
   const [isMutating, setIsMutating] = useBoolean();
   const toast = useToast();
-  const { setCurrentUser } = useAuthContext();
+  const setCurrentUser = useAuthStore((state) => state.setCurrentUser);
 
   const logout = async () => {
     try {
@@ -22,9 +22,7 @@ export const useLogout = () => {
       let errorMessage = 'Sorry, error has occurred. Try again later.';
 
       if (isErrorWithMessage(error)) {
-        errorMessage = error.response?.data
-          ? error.response.data
-          : errorMessage;
+        errorMessage = error.response?.data.message || errorMessage;
       }
 
       toast({

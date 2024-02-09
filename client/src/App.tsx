@@ -3,7 +3,6 @@ import { ChakraProvider } from '@chakra-ui/react';
 import customTheme from './theme';
 import { Routes } from './routes';
 import { AuthProvider } from './providers';
-
 // const socket = io('http://localhost:3000');
 
 function App() {

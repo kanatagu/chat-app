@@ -1,0 +1,1 @@
+export { useJoinedRoomList } from './useJoinedRoomList';

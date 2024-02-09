@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 import baseServer from '../base';
-import { UserType } from '../../types/user';
+import { UserType } from '../../types';
 
 type LoginApiArg = {
   username: string;

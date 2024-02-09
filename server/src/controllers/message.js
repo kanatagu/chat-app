@@ -10,11 +10,11 @@ const { messageSchema } = require('../schema/message');
 const getMessages = async (req, res) => {
   const { roomId } = req.query;
 
-  if (!roomId) return res.status(400).json('Room ID is required');
+  if (!roomId) return res.status(400).json({ message: 'Room ID is required' });
 
   try {
     const messages = await pool.query(
-      'SELECT * FROM messages WHERE room_id = $1',
+      'SELECT messages.*, users.image_icon, users.username  FROM messages LEFT JOIN users ON messages.user_id = users.id WHERE messages.room_id = $1',
       [roomId]
     );
 
@@ -56,7 +56,7 @@ const createMessage = async (req, res) => {
   } catch (error) {
     if (error.validationError) {
       // Validation Error
-      return res.status(400).json(error.message);
+      return res.status(400).json({ message: error.message });
     } else {
       return res.status(500).json({ message: error.message });
     }
@@ -99,7 +99,7 @@ const updateMessage = async (req, res) => {
   } catch (error) {
     if (error.validationError) {
       // Validation Error
-      return res.status(400).json(error.message);
+      return res.status(400).json({ message: error.message });
     } else {
       return res.status(500).json({ message: error.message });
     }

@@ -1,5 +1,5 @@
 import { PrivateLayout } from '../components/layout';
-import { HomePage } from '../pages';
+import { HomePage, ChatPage } from '../pages';
 
 export const PrivateRoutes = [
   {
@@ -9,6 +9,10 @@ export const PrivateRoutes = [
       {
         index: true,
         element: <HomePage />,
+      },
+      {
+        path: 'chat/:roomId',
+        element: <ChatPage />,
       },
     ],
   },

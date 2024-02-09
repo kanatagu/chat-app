@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import {
   Box,
   Flex,
@@ -5,43 +6,46 @@ import {
   Text,
   VStack,
   useDisclosure,
+  SkeletonCircle,
+  Skeleton,
 } from '@chakra-ui/react';
 import { FiHash } from 'react-icons/fi';
+import { useErrorBoundary } from 'react-error-boundary';
 import { MessageItem, MessageInput } from './index';
 import { RoomDetailsModal } from '../room';
-
-const dummyMessages = [
-  {
-    username: 'John Doe',
-    iconName: 'orange',
-    time: 'Today at 4:00 AM',
-    message: 'Hello everyone!',
-  },
-  {
-    username: 'Chris Evans',
-    iconName: 'ninja',
-    time: 'Today at 8:00 AM',
-    message:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, voluptatum saepe tempore ea dignissimos repellendus vel dolor placeat sit laudantium molestias fugiat veniam nihil quod harum distinctio repudiandae ut corporis!',
-  },
-  {
-    username: 'Mike Tyson',
-    iconName: '',
-    time: 'Today at 10:00 AM',
-    message:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, voluptatum saepe tempore ea dignissimos repellendus vel dolor placeat sit laudantium molestias fugiat veniam nihil quod harum distinctio repudiandae ut corporis!',
-  },
-  {
-    username: 'John Lennon',
-    iconName: '',
-    time: 'Today at 11:00 AM',
-    message:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, voluptatum saepe tempore ea dignissimos repellendus vel dolor placeat sit laudantium molestias fugiat veniam nihil quod harum distinctio repudiandae ut corporis! Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, voluptatum saepe tempore ea dignissimos repellendus vel dolor placeat sit laudantium molestias fugiat veniam nihil quod harum distinctio repudiandae ut corporis!',
-  },
-];
+import { getMessagesApi } from '../../api/message';
+import { useParams } from 'react-router-dom';
+import { MessageType } from '../../types';
+import { useCurrentRoomStore } from '../../store';
 
 export const MessagePanel = () => {
+  const { roomId } = useParams();
+  const { showBoundary } = useErrorBoundary();
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const currentRoom = useCurrentRoomStore((state) => state.currentRoom);
+
+  const [messages, setMessages] = useState<MessageType[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchMessages = async () => {
+      try {
+        if (roomId) {
+          setIsLoading(true);
+          const { data } = await getMessagesApi(roomId);
+          setMessages(data);
+          setIsLoading(false);
+        }
+      } catch (error) {
+        showBoundary(error);
+      }
+    };
+
+    fetchMessages();
+  }, [showBoundary, roomId]);
+
+  console.log('messages', messages);
 
   return (
     <>
@@ -78,7 +82,7 @@ export const MessagePanel = () => {
               <Text as='span' fontSize='sm' w={{ base: '16px', md: '20px' }}>
                 <FiHash size={'100%'} />
               </Text>
-              JavaScript
+              {currentRoom?.name}
             </Heading>
             <Text
               color='gray.400'
@@ -90,10 +94,7 @@ export const MessagePanel = () => {
               }}
               fontSize={'sm'}
             >
-              This is description! This is description! This is description!
-              This is description! This is description! This is description!
-              This is description! This is description! This is description!
-              This is description!
+              {currentRoom?.description}
             </Text>
           </Flex>
 
@@ -104,15 +105,31 @@ export const MessagePanel = () => {
             overflowY='auto'
             maxH={{ base: 'calc(100vh - 189px)', md: 'calc(100vh - 177px)' }}
           >
-            {dummyMessages.map((message, index) => (
-              <MessageItem
-                key={index}
-                username={message.username}
-                iconName={message.iconName}
-                time={message.time}
-                message={message.message}
-              />
-            ))}
+            {isLoading ? (
+              <>
+                {Array.from({ length: 8 }).map((_, index) => (
+                  <Flex gap='10px' key={index}>
+                    <SkeletonCircle size='10' />
+                    <Box>
+                      <Skeleton h='16px' w='200px' />
+                      <Skeleton h='20px' w='300px' mt='4px' />
+                    </Box>
+                  </Flex>
+                ))}
+              </>
+            ) : (
+              <>
+                {messages.map((message, index) => (
+                  <MessageItem
+                    key={index}
+                    username={message.username}
+                    imageIcon={message.image_icon}
+                    time={message.created_at}
+                    message={message.message}
+                  />
+                ))}
+              </>
+            )}
           </VStack>
         </Box>
 

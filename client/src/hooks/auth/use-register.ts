@@ -5,12 +5,12 @@ import { useToast, useBoolean } from '@chakra-ui/react';
 import { authSchema, AuthSchema } from '../../schema';
 import { registerApi } from '../../api/auth';
 import { isErrorWithMessage } from '../../utils';
-import { useAuthContext } from '../../providers';
+import { useAuthStore } from '../../store';
 
 export const useRegister = () => {
   const navigate = useNavigate();
   const toast = useToast();
-  const { setCurrentUser } = useAuthContext();
+  const setCurrentUser = useAuthStore((state) => state.setCurrentUser);
   const [isMutating, setIsMutating] = useBoolean();
 
   const {
@@ -34,11 +34,11 @@ export const useRegister = () => {
 
       setIsMutating.off();
       navigate('/');
-    } catch (e) {
+    } catch (error) {
       let errorMessage = 'Sorry, error has occurred. Try again later.';
 
-      if (isErrorWithMessage(e)) {
-        errorMessage = e.response?.data ? e.response.data : errorMessage;
+      if (isErrorWithMessage(error)) {
+        errorMessage = error.response?.data.message || errorMessage;
       }
 
       toast({

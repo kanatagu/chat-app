@@ -10,7 +10,7 @@ const getUser = async (req, res) => {
     const { id: userId } = req.user;
 
     const user = await pool.query(
-      'SELECT id, username, rooms FROM users WHERE id = $1',
+      'SELECT id, username, image_icon FROM users WHERE id = $1',
       [userId]
     );
     return res.status(200).json(user.rows[0]);
@@ -27,25 +27,13 @@ const getUser = async (req, res) => {
 const getJoinedRooms = async (req, res) => {
   try {
     const { id: userId } = req.user;
-    console.log('req.user', req.user);
 
     const joinedRooms = await pool.query(
       'SELECT * FROM rooms JOIN user_rooms ON rooms.id = user_rooms.room_id WHERE user_rooms.user_id = $1',
       [userId]
     );
 
-    console.log('joinedRooms', joinedRooms);
-
-    // const user = await pool.query('SELECT rooms FROM users WHERE id = $1', [
-    //   userId,
-    // ]);
-
-    // const roomsArray = await pool.query(
-    //   'SELECT * FROM rooms WHERE id = ANY($1)',
-    //   [user.rows[0].rooms]
-    // );
-
-    // return res.status(200).json(roomsArray.rows);
+    return res.status(200).json(joinedRooms.rows);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

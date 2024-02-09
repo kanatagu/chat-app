@@ -10,29 +10,22 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { FiLogOut } from 'react-icons/fi';
-import { useAuthContext } from '../../providers';
+import { useAuthStore } from '../../store';
 import defaultIcon from '../../assets/account-icon/default.svg';
 import { AccountModal } from './index';
 import { useLogout } from '../../hooks/auth';
 
-const dummyUser = {
-  username: 'John Doe',
-  id: 1,
-  roms: [],
-  image_icon: '',
-};
-
 export const AccountBar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [iconSrc, setIconSrc] = useState(defaultIcon);
-  const { currentUser } = useAuthContext();
+  const currentUser = useAuthStore((state) => state.currentUser);
   const { logout, isMutating } = useLogout();
 
   useEffect(() => {
     const fetchIcon = async () => {
-      if (!dummyUser.image_icon) return;
+      if (!currentUser?.image_icon) return;
 
-      const icon = dummyUser.image_icon;
+      const icon = currentUser.image_icon;
 
       import(`../../assets/account-icon/${icon}.jpg`).then((module) => {
         setIconSrc(module.default);
@@ -65,7 +58,7 @@ export const AccountBar = () => {
           }}
         >
           <Avatar
-            name={dummyUser.username}
+            name={currentUser?.username}
             src={iconSrc}
             bg={'gray.300'}
             size={{ base: 'sm', md: 'md' }}
@@ -75,7 +68,7 @@ export const AccountBar = () => {
             fontSize='lg'
             display={{ base: 'none', md: 'block' }}
           >
-            {dummyUser.username}
+            {currentUser?.username}
           </Box>
         </MenuButton>
         <MenuList>

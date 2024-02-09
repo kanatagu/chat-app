@@ -30,7 +30,7 @@ const register = async (req, res) => {
     );
 
     if (existingUser.rows.length > 0) {
-      return res.status(400).json('User already exists');
+      return res.status(400).json({ message: 'User already exists' });
     }
 
     // Insert user into db with array of rooms
@@ -87,7 +87,7 @@ const register = async (req, res) => {
 
     // Validation Error
     if (error.validationError) {
-      return res.status(400).json(error.message);
+      return res.status(400).json({ message: error.message });
     } else {
       return res.status(500).json({ message: error.message });
     }
@@ -113,7 +113,7 @@ const login = async (req, res) => {
     ]);
 
     if (user.rows.length === 0) {
-      return res.status(400).json('Invalid Credentials');
+      return res.status(400).json({ message: 'Invalid Credentials' });
     }
 
     const matchPassword = await bcrypt.compare(
@@ -122,7 +122,7 @@ const login = async (req, res) => {
     );
 
     if (!matchPassword) {
-      return res.status(400).json('Invalid Credentials');
+      return res.status(400).json({ message: 'Invalid Credentials' });
     }
 
     const token = jwt.sign(
@@ -148,7 +148,7 @@ const login = async (req, res) => {
   } catch (error) {
     // Validation Error
     if (error.validationError) {
-      return res.status(400).json(error.message);
+      return res.status(400).json({ message: error.message });
     } else {
       return res.status(500).json({ message: error.message });
     }

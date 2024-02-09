@@ -4,14 +4,14 @@ import defaultIcon from '../../assets/account-icon/default.svg';
 
 type MessageItemProps = {
   username: string;
-  iconName: string;
+  imageIcon: string | null;
   time: string;
   message: string;
 };
 
 export const MessageItem = ({
   username,
-  iconName,
+  imageIcon,
   time,
   message,
 }: MessageItemProps) => {
@@ -19,9 +19,9 @@ export const MessageItem = ({
 
   useEffect(() => {
     const fetchIcon = async () => {
-      if (!iconName) return;
+      if (!imageIcon) return;
 
-      import(`../../assets/account-icon/${iconName}.jpg`).then((module) => {
+      import(`../../assets/account-icon/${imageIcon}.jpg`).then((module) => {
         setIconSrc(module.default);
       });
     };
