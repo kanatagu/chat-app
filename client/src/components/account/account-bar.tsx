@@ -41,8 +41,9 @@ export const AccountBar = () => {
         <MenuButton
           as={Button}
           bgColor='transparent'
-          h={'auto'}
-          p={{ base: '0px', md: '10px' }}
+          h={'54px'}
+          px={{ base: '0px', md: '10px' }}
+          py={{ base: '0px', md: '0px' }}
           sx={{
             span: {
               display: 'flex',

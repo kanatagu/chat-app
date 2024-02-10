@@ -5,7 +5,7 @@ const {
   getJoinedRooms,
   joinRoom,
   removeRoom,
-} = require('../controllers/user');
+} = require('../controllers/cllient/user');
 const verifyToken = require('../utils/verifyToken');
 
 router.get('/', verifyToken, getUser);

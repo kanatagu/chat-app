@@ -5,7 +5,7 @@ const {
   createRoom,
   updateRoom,
   deleteRoom,
-} = require('../controllers/room');
+} = require('../controllers/cllient/room');
 const verifyToken = require('../utils/verifyToken');
 
 router.get('/', getRooms);

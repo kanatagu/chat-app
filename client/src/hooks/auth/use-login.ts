@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { useToast, useBoolean } from '@chakra-ui/react';
-import { authSchema, AuthSchema } from '../../schema';
+import { authSchema, AuthSchemaType } from '../../schema';
 import { loginApi } from '../../api/auth';
 import { isErrorWithMessage } from '../../utils';
 import { useAuthStore } from '../../store';
@@ -17,11 +17,11 @@ export const useLogin = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<AuthSchema>({
+  } = useForm<AuthSchemaType>({
     resolver: zodResolver(authSchema),
   });
 
-  const login = async (data: AuthSchema) => {
+  const login = async (data: AuthSchemaType) => {
     try {
       setIsMutating.on();
 

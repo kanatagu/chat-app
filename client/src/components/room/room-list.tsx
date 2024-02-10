@@ -9,15 +9,17 @@ import {
 import { FiHash, FiPlus } from 'react-icons/fi';
 import { RoomCreateModal } from './index';
 import { useJoinedRoomList } from '../../hooks/room';
+import { CustomSocket } from '../../types';
 
 type RoomListProps = {
+  socket: CustomSocket;
   onDrawerClose?: () => void;
 };
 
-export const RoomList = ({ onDrawerClose }: RoomListProps) => {
+export const RoomList = ({ socket, onDrawerClose }: RoomListProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { joinedRooms, isLoading, currentRoom, roomClickHandler } =
-    useJoinedRoomList(onDrawerClose);
+    useJoinedRoomList(socket, onDrawerClose);
 
   return (
     <Box>
@@ -39,6 +41,8 @@ export const RoomList = ({ onDrawerClose }: RoomListProps) => {
             {joinedRooms.map((room) => (
               <Flex
                 key={room.id}
+                role='button'
+                tabIndex={0}
                 onClick={() => roomClickHandler(room.id)}
                 py='10px'
                 px='10px'

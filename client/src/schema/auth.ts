@@ -12,4 +12,4 @@ export const authSchema = z.object({
     .max(30, { message: 'Password must be less than 30 characters' }),
 });
 
-export type AuthSchema = z.infer<typeof authSchema>;
+export type AuthSchemaType = z.infer<typeof authSchema>;

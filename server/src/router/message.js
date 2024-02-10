@@ -5,7 +5,7 @@ const {
   createMessage,
   updateMessage,
   deleteMessage,
-} = require('../controllers/message');
+} = require('../controllers/cllient/message');
 const verifyToken = require('../utils/verifyToken');
 
 router.get('/', verifyToken, getMessages);

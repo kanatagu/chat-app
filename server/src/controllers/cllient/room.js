@@ -1,6 +1,6 @@
-const pool = require('../db/pool');
-const validateForm = require('../utils/validateForm');
-const { roomSchema } = require('../schema/room');
+const pool = require('../../db/pool');
+const validateForm = require('../../utils/validateForm');
+const { roomSchema } = require('../../schema/room');
 
 /**
  * @desc     Get rooms

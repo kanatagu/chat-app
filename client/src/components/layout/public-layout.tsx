@@ -12,7 +12,13 @@ export const PublicLayout = () => {
 
   return (
     <ErrorBoundary FallbackComponent={ErrorFallback} onError={onError}>
-      <Flex direction='column' align='center' justify='center' h='100vh'>
+      <Flex
+        direction='column'
+        align='center'
+        justify='center'
+        h='100vh'
+        as='main'
+      >
         <Outlet />
       </Flex>
     </ErrorBoundary>

@@ -9,6 +9,7 @@ const authRouter = require('./router/auth');
 const roomRouter = require('./router/room');
 const userRouter = require('./router/user');
 const messageRouter = require('./router/message');
+const { socketIoHandler } = require('./socket');
 
 dotenv.config();
 
@@ -57,12 +58,6 @@ const io = new Server(server, {
   },
 });
 
-// Run socketIo when client connects
-io.on('connect', (socket) => {
-  console.log(`Client connected with id: ${socket.id}`);
-  socket.on('disconnect', () =>
-    console.log(`Client disconnected with id: ${socket.id}`)
-  );
-});
+socketIoHandler(io);
 
 server.listen(PORT, () => console.log(`Server running on port ${PORT}`));

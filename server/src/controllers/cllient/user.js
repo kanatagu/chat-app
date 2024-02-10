@@ -1,4 +1,4 @@
-const pool = require('../db/pool');
+const pool = require('../../db/pool');
 
 /**
  * @desc     Get User
@@ -39,6 +39,7 @@ const getJoinedRooms = async (req, res) => {
   }
 };
 
+// TODO Delete this
 /**
  * @desc     Join room
  * @route    POST /api/user/rooms/:id/join

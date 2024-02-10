@@ -1,8 +1,8 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const pool = require('../db/pool');
-const validateForm = require('../utils/validateForm');
-const { authSchema } = require('../schema/auth');
+const pool = require('../../db/pool');
+const validateForm = require('../../utils/validateForm');
+const { authSchema } = require('../../schema/auth');
 
 /**
  * @desc     Register user

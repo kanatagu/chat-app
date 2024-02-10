@@ -1,6 +1,6 @@
-const pool = require('../db/pool');
-const validateForm = require('../utils/validateForm');
-const { messageSchema } = require('../schema/message');
+const pool = require('../../db/pool');
+const validateForm = require('../../utils/validateForm');
+const { messageSchema } = require('../../schema/message');
 
 /**
  * GET messages
@@ -25,6 +25,7 @@ const getMessages = async (req, res) => {
   }
 };
 
+// TODO Delete this
 /**
  * @desc     Create message
  * @route    POST /api/messages

@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import {
   Box,
   Flex,
@@ -10,40 +9,22 @@ import {
   Skeleton,
 } from '@chakra-ui/react';
 import { FiHash } from 'react-icons/fi';
-import { useErrorBoundary } from 'react-error-boundary';
 import { MessageItem, MessageInput } from './index';
 import { RoomDetailsModal } from '../room';
-import { getMessagesApi } from '../../api/message';
-import { useParams } from 'react-router-dom';
-import { MessageType } from '../../types';
+import { CustomSocket } from '../../types';
 import { useCurrentRoomStore } from '../../store';
+import { useDisplayMessages } from '../../hooks/message';
 
-export const MessagePanel = () => {
-  const { roomId } = useParams();
-  const { showBoundary } = useErrorBoundary();
+type MessagePanelProps = {
+  socket: CustomSocket;
+};
+
+export const MessagePanel = ({ socket }: MessagePanelProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const currentRoom = useCurrentRoomStore((state) => state.currentRoom);
 
-  const [messages, setMessages] = useState<MessageType[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    const fetchMessages = async () => {
-      try {
-        if (roomId) {
-          setIsLoading(true);
-          const { data } = await getMessagesApi(roomId);
-          setMessages(data);
-          setIsLoading(false);
-        }
-      } catch (error) {
-        showBoundary(error);
-      }
-    };
-
-    fetchMessages();
-  }, [showBoundary, roomId]);
+  const { messages, isLoading } = useDisplayMessages(socket);
 
   console.log('messages', messages);
 
@@ -52,13 +33,15 @@ export const MessagePanel = () => {
       <VStack
         w='100%'
         bgColor='gray.700'
-        h={{ base: 'calc(100vh - 64px)', md: 'calc(100vh - 32px)' }}
+        h={{ base: 'calc(100vh - 62px)', md: 'calc(100vh - 32px)' }}
         align='stretch'
         justify='space-between'
       >
         <Box
           py={{ base: '10px', md: '10px' }}
           px={{ base: '16px', md: '20px' }}
+          flexShrink={1}
+          overflow='hidden'
         >
           <Flex
             align='end'
@@ -103,7 +86,7 @@ export const MessagePanel = () => {
             gap='28px'
             mt={{ base: '10px', md: '16px' }}
             overflowY='auto'
-            maxH={{ base: 'calc(100vh - 189px)', md: 'calc(100vh - 177px)' }}
+            maxH={{ base: 'calc(100vh - 184px)', md: 'calc(100vh - 168px)' }}
           >
             {isLoading ? (
               <>
@@ -123,8 +106,8 @@ export const MessagePanel = () => {
                   <MessageItem
                     key={index}
                     username={message.username}
-                    imageIcon={message.image_icon}
-                    time={message.created_at}
+                    imageIcon={message.imageIcon}
+                    time={message.time}
                     message={message.message}
                   />
                 ))}
@@ -133,7 +116,7 @@ export const MessagePanel = () => {
           </VStack>
         </Box>
 
-        <MessageInput />
+        <MessageInput socket={socket} />
       </VStack>
 
       <RoomDetailsModal isOpen={isOpen} onClose={onClose} />

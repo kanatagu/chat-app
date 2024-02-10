@@ -24,7 +24,12 @@ export const HomePage = () => {
         px={{ base: '16px', md: '20px' }}
       >
         <Heading as='h1'>Welcome to Dev Chat!</Heading>
-        <Text fontSize='xl'>Select a room to start chatting.</Text>
+        <Flex align='center' gap='6px'>
+          <Text fontSize='xl'>Select a room to start chatting</Text>
+          <Text as='span' fontSize='30px'>
+            ☕
+          </Text>
+        </Flex>
       </VStack>
     </Flex>
   );

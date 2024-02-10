@@ -13,7 +13,7 @@ export const PrivateLayout = () => {
 
   return (
     <ErrorBoundary FallbackComponent={ErrorFallback} onError={onError}>
-      <Flex direction='column' minH='100vh'>
+      <Flex direction='column' minH='100vh' as='main'>
         <Outlet />
       </Flex>
     </ErrorBoundary>
