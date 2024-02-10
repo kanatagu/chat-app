@@ -24,6 +24,7 @@ export const useJoinedRoomList = (onDrawerClose?: () => void) => {
     [navigate, onDrawerClose]
   );
 
+  console.log('roomId', roomId);
   // Fetch the joined rooms
   useEffect(() => {
     if (joinedRooms.length) return;

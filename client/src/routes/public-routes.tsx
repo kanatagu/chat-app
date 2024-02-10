@@ -1,9 +1,14 @@
 import { PublicLayout } from '../components/layout';
 import { LoginPage, RegisterPage } from '../pages';
+import { AuthWrapper } from './index';
 
 export const PublicRoutes = [
   {
-    element: <PublicLayout />,
+    element: (
+      <AuthWrapper>
+        <PublicLayout />
+      </AuthWrapper>
+    ),
     children: [
       {
         path: 'login',

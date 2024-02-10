@@ -1,4 +1,4 @@
-import { Flex, Box, VStack, Text, Heading } from '@chakra-ui/react';
+import { Flex, VStack, Text, Heading } from '@chakra-ui/react';
 import { Sidebar, SpHeader } from '../components/layout';
 import { useIsMobile } from '../hooks/common/';
 

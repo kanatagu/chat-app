@@ -13,10 +13,10 @@ export const useAuthStore = create<AuthStore>()((set) => ({
   currentUser: null,
   setCurrentUser: (user) => set({ currentUser: user }),
   getUser: async () => {
-    set({ isGettingUser: true });
-    const res = await getUserApi();
-    set({ currentUser: res.data });
-    set({ isGettingUser: false });
+    await getUserApi()
+      .then((res) => set({ currentUser: res.data }))
+      .catch(() => {})
+      .finally(() => set({ isGettingUser: false }));
   },
-  isGettingUser: false,
+  isGettingUser: true,
 }));
