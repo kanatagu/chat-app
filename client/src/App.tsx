@@ -1,13 +1,12 @@
-import './App.css';
-import { io } from 'socket.io-client';
-
-const socket = io('http://localhost:3000');
+import { ChakraProvider } from '@chakra-ui/react';
+import customTheme from './theme';
+import { Routes } from './routes';
 
 function App() {
   return (
-    <>
-      <div>Hello World!</div>
-    </>
+    <ChakraProvider theme={customTheme}>
+      <Routes />
+    </ChakraProvider>
   );
 }
 
