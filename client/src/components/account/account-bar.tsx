@@ -7,16 +7,16 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
-  useDisclosure,
 } from '@chakra-ui/react';
 import { FiLogOut } from 'react-icons/fi';
+import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../store';
 import defaultIcon from '../../assets/account-icon/default.svg';
-import { AccountModal } from './index';
 import { useLogout } from '../../hooks/auth';
 
 export const AccountBar = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const navigate = useNavigate();
+
   const [iconSrc, setIconSrc] = useState(defaultIcon);
   const currentUser = useAuthStore((state) => state.currentUser);
   const { logout, isMutating } = useLogout();
@@ -73,7 +73,7 @@ export const AccountBar = () => {
           </Box>
         </MenuButton>
         <MenuList>
-          <MenuItem onClick={onOpen}>Profile</MenuItem>
+          <MenuItem onClick={() => navigate('/profile')}>Profile</MenuItem>
           <MenuItem
             onClick={logout}
             isDisabled={isMutating}
@@ -89,8 +89,6 @@ export const AccountBar = () => {
           </MenuItem>
         </MenuList>
       </Menu>
-
-      <AccountModal isOpen={isOpen} onClose={onClose} />
     </>
   );
 };

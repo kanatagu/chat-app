@@ -30,7 +30,10 @@ export const RoomList = ({ onDrawerClose }: RoomListProps) => {
           size='sm'
           w='140px'
           justifyContent='flex-start'
-          onClick={() => navigate('/all-rooms')}
+          onClick={() => {
+            navigate('/all-rooms');
+            onDrawerClose && onDrawerClose();
+          }}
         >
           <MdManageSearch />
           Browse Rooms

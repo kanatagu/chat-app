@@ -1,7 +1,6 @@
 import { VStack, Heading } from '@chakra-ui/react';
-import { AllRooms } from '../components/room';
 
-export const AllRoomsPage = () => {
+export const ProfilePage = () => {
   return (
     <VStack
       w='100%'
@@ -11,8 +10,7 @@ export const AllRoomsPage = () => {
       py={{ base: '10px', md: '40px' }}
       px={{ base: '16px', md: '80px' }}
     >
-      <Heading as='h1'>All rooms</Heading>
-      <AllRooms />
+      <Heading as='h1'>Profile Page</Heading>
     </VStack>
   );
 };

@@ -1,6 +1,6 @@
 import { PrivateLayout } from '../components/layout';
 import { AuthWrapper } from './index';
-import { HomePage, ChatPage, AllRoomsPage } from '../pages';
+import { HomePage, ChatPage, AllRoomsPage, ProfilePage } from '../pages';
 
 export const PrivateRoutes = [
   {
@@ -22,6 +22,10 @@ export const PrivateRoutes = [
       {
         path: 'all-rooms',
         element: <AllRoomsPage />,
+      },
+      {
+        path: 'profile',
+        element: <ProfilePage />,
       },
     ],
   },
