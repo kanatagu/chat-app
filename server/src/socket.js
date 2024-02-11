@@ -1,4 +1,3 @@
-const { joinRoom } = require('./controllers/server/user-room');
 const { createMessage } = require('./controllers/server/message');
 
 const socketIoHandler = (io) => {
@@ -6,11 +5,11 @@ const socketIoHandler = (io) => {
   io.on('connect', (socket) => {
     console.log(`Client connected with id: ${socket.id}`);
 
+    // Join the chat
     socket.on('join_chat', async (data) => {
       console.log('Join chat!', data);
       const { userId, roomId, username } = data;
 
-      // Join room
       socket.join(roomId);
     });
 
@@ -33,6 +32,14 @@ const socketIoHandler = (io) => {
         });
         return;
       }
+    });
+
+    // Leave the chat
+    socket.on('leave_chat', async (data) => {
+      console.log('Leave chat!', data);
+      const { roomId } = data;
+
+      socket.leave(roomId);
     });
 
     socket.on('disconnect', () =>

@@ -2,6 +2,7 @@ import { extendTheme } from '@chakra-ui/react';
 import '@fontsource/lato';
 import '@fontsource/lato/700.css';
 import '@fontsource/lato/400.css';
+import { Checkbox } from './check-box';
 
 const customTheme = extendTheme({
   config: {
@@ -14,6 +15,9 @@ const customTheme = extendTheme({
   },
   styles: {},
   colors: {},
+  components: {
+    Checkbox,
+  },
 });
 
 export default customTheme;

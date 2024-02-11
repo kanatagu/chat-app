@@ -7,13 +7,14 @@ import { createRoomApi } from '../../api/room';
 import { useAuthStore, useJoinedRoomsStore } from '../../store';
 import { isErrorWithMessage } from '../../utils';
 import { useNavigate } from 'react-router-dom';
-import { getUserRoomsApi } from '../../api/user';
 
 export const useCreateRoom = (onClose: () => void) => {
   const navigate = useNavigate();
   const toast = useToast();
 
-  const setJoinedRooms = useJoinedRoomsStore((state) => state.setJoinedRooms);
+  const getUserJoinedRooms = useJoinedRoomsStore(
+    (state) => state.getUserJoinedRooms
+  );
   const currentUser = useAuthStore((state) => state.currentUser);
 
   const [isMutating, setIsMutating] = useState(false);
@@ -40,11 +41,7 @@ export const useCreateRoom = (onClose: () => void) => {
         description: data.description,
       });
 
-      console.log('res', res);
-
-      const { data: userJoinedRooms } = await getUserRoomsApi();
-
-      setJoinedRooms(userJoinedRooms);
+      await getUserJoinedRooms();
 
       onClose();
       navigate(`/chat/${res.data.id}`);

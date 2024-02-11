@@ -6,7 +6,9 @@ import {
   Flex,
   Skeleton,
 } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
 import { FiHash, FiPlus } from 'react-icons/fi';
+import { MdManageSearch } from 'react-icons/md';
 import { RoomCreateModal } from './index';
 import { useJoinedRoomList } from '../../hooks/room';
 
@@ -16,16 +18,43 @@ type RoomListProps = {
 
 export const RoomList = ({ onDrawerClose }: RoomListProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const navigate = useNavigate();
   const { joinedRooms, isLoading, currentRoom, roomClickHandler } =
     useJoinedRoomList(onDrawerClose);
 
   return (
     <Box>
+      <Box mt={{ base: '0px', md: '16px' }} px='10px'>
+        <Button
+          gap='8px'
+          size='sm'
+          w='140px'
+          justifyContent='flex-start'
+          onClick={() => navigate('/all-rooms')}
+        >
+          <MdManageSearch />
+          Browse Rooms
+        </Button>
+      </Box>
+
+      <Box mt='10px' px='10px'>
+        <Button
+          gap='8px'
+          size='sm'
+          w='140px'
+          justifyContent='flex-start'
+          // TODO Double modal opens, need to change
+          onClick={onOpen}
+        >
+          <FiPlus />
+          Create Room
+        </Button>
+      </Box>
       <VStack
         align='start'
-        mt={{ base: '0px', md: '16px' }}
         gap={0}
-        maxH={{ base: 'auto', md: 'calc(100vh - 207px)' }}
+        mt='10px'
+        maxH={{ base: 'auto', md: 'calc(100vh - 240px)' }}
         overflow={'auto'}
       >
         {isLoading ? (
@@ -67,17 +96,6 @@ export const RoomList = ({ onDrawerClose }: RoomListProps) => {
           </>
         )}
       </VStack>
-
-      <Box mt='20px' px='10px'>
-        <Button
-          gap='8px'
-          // TODO Double modal opens, need to change
-          onClick={onOpen}
-        >
-          <FiPlus />
-          Create Room
-        </Button>
-      </Box>
 
       <RoomCreateModal isOpen={isOpen} onClose={onClose} />
     </Box>

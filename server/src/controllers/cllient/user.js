@@ -39,7 +39,6 @@ const getJoinedRooms = async (req, res) => {
   }
 };
 
-// TODO Delete this
 /**
  * @desc     Join room
  * @route    POST /api/user/rooms/:id/join
@@ -59,22 +58,20 @@ const joinRoom = async (req, res) => {
 
     // Check if the user already joined the room
     const joinedRoom = await pool.query(
-      'SELECT rooms FROM users WHERE id = $1',
-      [userId]
+      'SELECT * FROM user_rooms WHERE user_id = $1 AND room_id = $2',
+      [userId, roomId]
     );
 
-    if (joinedRoom.rows[0].rooms.includes(Number(roomId))) {
-      throw new Error('User already joined the room');
-    }
+    if (joinedRoom.rows[0]) throw new Error('User already joined the room');
 
-    const user = await pool.query(
-      'UPDATE users SET rooms = array_append(rooms, $1) WHERE id = $2 RETURNING *',
-      [roomId, userId]
+    const userRoom = await pool.query(
+      'INSERT INTO user_rooms (user_id, room_id) VALUES ($1, $2) RETURNING *',
+      [userId, roomId]
     );
 
-    if (!user.rows[0]) throw new Error('Failed to update user rooms');
+    if (!userRoom.rows[0]) throw new Error('Failed to join room');
 
-    return res.status(200).json(user.rows[0]);
+    return res.status(200).json(userRoom.rows[0]);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -90,21 +87,22 @@ const removeRoom = async (req, res) => {
     const { id: userId } = req.user;
     const { id: roomId } = req.params;
 
-    // Check if the room exists
-    const room = await pool.query('SELECT * FROM rooms WHERE id = $1', [
-      roomId,
-    ]);
-
-    if (!room.rows[0]) throw new Error('Room not found');
-
-    const user = await pool.query(
-      'UPDATE users SET rooms = array_remove(rooms, $1) WHERE id = $2 RETURNING *',
-      [roomId, userId]
+    // Check if the user already joined the room
+    const joinedRoom = await pool.query(
+      'SELECT * FROM user_rooms WHERE user_id = $1 AND room_id = $2',
+      [userId, roomId]
     );
 
-    if (!user.rows[0]) throw new Error('Failed to remove room from user rooms');
+    if (!joinedRoom.rows[0]) throw new Error('User not joined the room');
 
-    return res.status(200).json(user.rows[0]);
+    const removedRoom = await pool.query(
+      'DELETE FROM user_rooms WHERE user_id = $1 AND room_id = $2 RETURNING *',
+      [userId, roomId]
+    );
+
+    if (!removedRoom.rows[0]) throw new Error('Failed to remove room');
+
+    return res.status(200).json(removedRoom.rows[0]);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

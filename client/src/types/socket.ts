@@ -21,8 +21,6 @@ type ClientToServerEvents = {
     username: string;
   }) => void;
 
-  leave_chat: ({ userId, roomId }: { userId: number; roomId: number }) => void;
-
   send_message: ({
     message,
     userId,
@@ -32,6 +30,8 @@ type ClientToServerEvents = {
     userId: number;
     roomId: number;
   }) => void;
+
+  leave_chat: ({ userId, roomId }: { userId: number; roomId: number }) => void;
 };
 
 export type CustomSocket = Socket<ServerToClientEvents, ClientToServerEvents>;

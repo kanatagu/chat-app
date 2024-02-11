@@ -35,5 +35,15 @@ export const useSetCurrentRoom = () => {
         });
       }
     }
+
+    // Leave chat when the component is unmounted
+    return () => {
+      if (socket && currentUser && roomId) {
+        socket.emit('leave_chat', {
+          userId: currentUser.id,
+          roomId: Number(roomId),
+        });
+      }
+    };
   }, [roomId, setCurrentRoom, joinedRooms, currentUser, socket]);
 };

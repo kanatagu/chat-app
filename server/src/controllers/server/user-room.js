@@ -1,5 +1,6 @@
 const pool = require('../../db/pool');
 
+// TODO Delete this
 /**
  * @desc Join room
  */
