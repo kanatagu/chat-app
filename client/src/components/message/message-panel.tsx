@@ -1,30 +1,10 @@
-import {
-  Box,
-  Flex,
-  Heading,
-  Text,
-  VStack,
-  useDisclosure,
-  SkeletonCircle,
-  Skeleton,
-} from '@chakra-ui/react';
-import { FiHash } from 'react-icons/fi';
+import { Box, Flex, VStack, SkeletonCircle, Skeleton } from '@chakra-ui/react';
 import { MessageItem, MessageInput } from './index';
-import { RoomDetailsModal } from '../room';
-import { CustomSocket } from '../../types';
-import { useCurrentRoomStore } from '../../store';
 import { useDisplayMessages } from '../../hooks/message';
+import { MessageHeader } from './index';
 
-type MessagePanelProps = {
-  socket: CustomSocket;
-};
-
-export const MessagePanel = ({ socket }: MessagePanelProps) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-
-  const currentRoom = useCurrentRoomStore((state) => state.currentRoom);
-
-  const { messages, isLoading } = useDisplayMessages(socket);
+export const MessagePanel = () => {
+  const { messages, isLoading } = useDisplayMessages();
 
   console.log('messages', messages);
 
@@ -43,43 +23,7 @@ export const MessagePanel = ({ socket }: MessagePanelProps) => {
           flexShrink={1}
           overflow='hidden'
         >
-          <Flex
-            align='end'
-            gap='10px'
-            onClick={onOpen}
-            cursor='pointer'
-            _hover={{
-              opacity: '.8',
-            }}
-            borderBottom='1px solid'
-            borderColor='gray.600'
-            pb='10px'
-          >
-            <Heading
-              as='h1'
-              display='flex'
-              alignItems='center'
-              fontSize={{ base: 'lg', md: '2xl' }}
-              gap='4px'
-            >
-              <Text as='span' fontSize='sm' w={{ base: '16px', md: '20px' }}>
-                <FiHash size={'100%'} />
-              </Text>
-              {currentRoom?.name}
-            </Heading>
-            <Text
-              color='gray.400'
-              display={'-webkit-box'}
-              overflow={'hidden'}
-              sx={{
-                WebkitBoxOrient: 'vertical',
-                WebkitLineClamp: '1',
-              }}
-              fontSize={'sm'}
-            >
-              {currentRoom?.description}
-            </Text>
-          </Flex>
+          <MessageHeader />
 
           <VStack
             align='start'
@@ -116,10 +60,8 @@ export const MessagePanel = ({ socket }: MessagePanelProps) => {
           </VStack>
         </Box>
 
-        <MessageInput socket={socket} />
+        <MessageInput />
       </VStack>
-
-      <RoomDetailsModal isOpen={isOpen} onClose={onClose} />
     </>
   );
 };

@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { CustomSocket } from '../../types';
 import { useErrorBoundary } from 'react-error-boundary';
 import { useToast } from '@chakra-ui/react';
 import { getMessagesApi } from '../../api/message';
+import { useSocketStore } from '../../store';
 
 type MessageDisplayType = {
   username: string;
@@ -12,10 +12,11 @@ type MessageDisplayType = {
   message: string;
 };
 
-export const useDisplayMessages = (socket: CustomSocket) => {
+export const useDisplayMessages = () => {
   const { roomId } = useParams();
   const { showBoundary } = useErrorBoundary();
   const toast = useToast();
+  const socket = useSocketStore((state) => state.socket);
 
   const [messages, setMessages] = useState<MessageDisplayType[]>([]);
   const [isLoading, setIsLoading] = useState(false);

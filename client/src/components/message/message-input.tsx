@@ -7,20 +7,15 @@ import {
 } from '@chakra-ui/react';
 import { FiSend } from 'react-icons/fi';
 import { useSendMessage } from '../../hooks/message';
-import { CustomSocket } from '../../types';
 
-type MessageInputProps = {
-  socket: CustomSocket;
-};
-
-export const MessageInput = ({ socket }: MessageInputProps) => {
+export const MessageInput = () => {
   const {
     register,
     sendMessageEnterHandler,
     onSendMessageSubmit,
     errors,
     reset,
-  } = useSendMessage(socket);
+  } = useSendMessage();
 
   return (
     <Flex

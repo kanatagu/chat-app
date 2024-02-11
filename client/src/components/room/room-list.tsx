@@ -9,21 +9,25 @@ import {
 import { FiHash, FiPlus } from 'react-icons/fi';
 import { RoomCreateModal } from './index';
 import { useJoinedRoomList } from '../../hooks/room';
-import { CustomSocket } from '../../types';
 
 type RoomListProps = {
-  socket: CustomSocket;
   onDrawerClose?: () => void;
 };
 
-export const RoomList = ({ socket, onDrawerClose }: RoomListProps) => {
+export const RoomList = ({ onDrawerClose }: RoomListProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { joinedRooms, isLoading, currentRoom, roomClickHandler } =
-    useJoinedRoomList(socket, onDrawerClose);
+    useJoinedRoomList(onDrawerClose);
 
   return (
     <Box>
-      <VStack align='start' mt={{ base: '0px', md: '16px' }} gap={0}>
+      <VStack
+        align='start'
+        mt={{ base: '0px', md: '16px' }}
+        gap={0}
+        maxH={{ base: 'auto', md: 'calc(100vh - 207px)' }}
+        overflow={'auto'}
+      >
         {isLoading ? (
           <>
             {Array.from({ length: 5 }).map((_, index) => (

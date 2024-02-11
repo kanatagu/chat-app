@@ -2,10 +2,10 @@ import { KeyboardEvent } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { messageSchema, MessageSchemaType } from '../../schema';
-import { CustomSocket } from '../../types';
-import { useAuthStore, useCurrentRoomStore } from '../../store';
+import { useAuthStore, useCurrentRoomStore, useSocketStore } from '../../store';
 
-export const useSendMessage = (socket: CustomSocket) => {
+export const useSendMessage = () => {
+  const socket = useSocketStore((state) => state.socket);
   const currentUser = useAuthStore((state) => state.currentUser);
   const currentRoom = useCurrentRoomStore((state) => state.currentRoom);
 

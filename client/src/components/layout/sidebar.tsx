@@ -3,13 +3,8 @@ import { Link as ReactRouterLink } from 'react-router-dom';
 import { FiCoffee } from 'react-icons/fi';
 import { AccountBar } from '../account';
 import { RoomList } from '../room';
-import { CustomSocket } from '../../types';
 
-type SidebarProps = {
-  socket: CustomSocket;
-};
-
-export const Sidebar = ({ socket }: SidebarProps) => {
+export const Sidebar = () => {
   return (
     <Flex
       flexDir='column'
@@ -34,7 +29,7 @@ export const Sidebar = ({ socket }: SidebarProps) => {
           Dev Chat
         </ChakraLink>
 
-        <RoomList socket={socket} />
+        <RoomList />
       </Box>
 
       <AccountBar />

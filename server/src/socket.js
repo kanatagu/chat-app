@@ -9,31 +9,9 @@ const socketIoHandler = (io) => {
     socket.on('join_chat', async (data) => {
       console.log('Join chat!', data);
       const { userId, roomId, username } = data;
-      console.log('userId', userId);
-      console.log('roomId', roomId);
-      console.log('username', username);
 
       // Join room
       socket.join(roomId);
-
-      // socket.join(roomId, () => {
-      //   // try {
-      //   //   // await joinRoom(userId, roomId);
-      //   //   // socket.to(roomId).emit('user_joined', {
-      //   //   //   message: `${username} joined the room`,
-      //   //   // });
-      //   //   console.log('User joined the room');
-
-      // io.in(roomId).emit('user_joined', {
-      //   message: `${username} joined the room`,
-      // });
-
-      //   // } catch (error) {
-      //   //   console.error('Failed to join room:', error);
-      //   //   socket.emit('join_room_error', { message: 'Failed to join room' });
-      //   //   return;
-      //   // }
-      // });
     });
 
     socket.on('send_message', async (data) => {
