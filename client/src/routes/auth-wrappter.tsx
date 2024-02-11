@@ -18,7 +18,7 @@ export const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     // if user does not login
-    if (!isGettingUser && !currentUser) {
+    if (!isGettingUser && !currentUser && !PUBLIC_PATH.includes(pathname)) {
       navigate('/login');
     }
 

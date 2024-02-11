@@ -101,15 +101,12 @@ const updateRoom = async (req, res) => {
  * @access   Private
  */
 const deleteRoom = async (req, res) => {
-  const client = await pool.connect();
-
   try {
-    await client.query('BEGIN');
     const { id: roomId } = req.params;
     const { id: userId } = req.user;
 
     // Only the user who created the room can delete it
-    const room = await client.query(
+    const room = await pool.query(
       'SELECT created_user_id FROM rooms WHERE id = $1',
       [roomId]
     );
@@ -125,24 +122,16 @@ const deleteRoom = async (req, res) => {
     }
 
     // // Delete Room
-    const deletedRoom = await client.query(
+    const deletedRoom = await pool.query(
       'DELETE FROM rooms WHERE id = $1 RETURNING *',
       [roomId]
     );
 
-    // Delete data from user_rooms table
-    await client.query(
-      'DELETE FROM user_rooms WHERE room_id = $1 AND user_id = $2',
-      [roomId, userId]
-    );
+    console.log('deletedRoom', deletedRoom);
 
-    await client.query('COMMIT');
     res.status(200).json(deletedRoom.rows[0]);
   } catch (error) {
-    await client.query('ROLLBACK');
     return res.status(500).json({ message: error.message });
-  } finally {
-    client.release();
   }
 };
 

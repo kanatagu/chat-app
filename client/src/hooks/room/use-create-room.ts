@@ -1,7 +1,6 @@
-import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { useToast } from '@chakra-ui/react';
+import { useToast, useBoolean } from '@chakra-ui/react';
 import { roomSchema, RoomSchemaType } from '../../schema';
 import { createRoomApi } from '../../api/room';
 import { useAuthStore, useJoinedRoomsStore } from '../../store';
@@ -17,8 +16,7 @@ export const useCreateRoom = (onClose: () => void) => {
   );
   const currentUser = useAuthStore((state) => state.currentUser);
 
-  const [isMutating, setIsMutating] = useState(false);
-
+  const [isMutating, setIsMutating] = useBoolean();
   const {
     register,
     handleSubmit,
@@ -29,10 +27,8 @@ export const useCreateRoom = (onClose: () => void) => {
   });
 
   const createRoom = async (data: RoomSchemaType) => {
-    console.log('submit!', data);
-
     try {
-      setIsMutating(true);
+      setIsMutating.on();
       if (!currentUser) throw new Error('User not found');
 
       const res = await createRoomApi({
@@ -61,7 +57,7 @@ export const useCreateRoom = (onClose: () => void) => {
         isClosable: true,
       });
     } finally {
-      setIsMutating(false);
+      setIsMutating.off();
     }
   };
 

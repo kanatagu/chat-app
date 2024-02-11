@@ -19,8 +19,8 @@ CREATE TABLE rooms (
 );
 
 CREATE TABLE user_rooms (
-  user_id INTEGER REFERENCES users(id),
-  room_id INTEGER REFERENCES rooms(id),
+  user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+  room_id INTEGER REFERENCES rooms(id) ON DELETE CASCADE,
   PRIMARY KEY (user_id, room_id),
   created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
@@ -28,7 +28,7 @@ CREATE TABLE user_rooms (
 CREATE TABLE messages (
   id SERIAL PRIMARY KEY,
   message VARCHAR(1000) NOT NULL,
-  user_id INTEGER REFERENCES users(id),
-  room_id INTEGER REFERENCES rooms(id),
+  user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+  room_id INTEGER REFERENCES rooms(id) ON DELETE CASCADE,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
