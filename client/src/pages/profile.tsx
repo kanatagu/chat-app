@@ -1,16 +1,18 @@
-import { VStack, Heading } from '@chakra-ui/react';
+import { Heading, VStack } from '@chakra-ui/react';
+import { ProfileSetting } from '../components/profile';
 
 export const ProfilePage = () => {
   return (
     <VStack
       w='100%'
-      bgColor='gray.900'
       align='stretch'
-      gap='20px'
-      py={{ base: '10px', md: '40px' }}
-      px={{ base: '16px', md: '80px' }}
+      bgColor='gray.900'
+      py={{ base: '10px', lg: '40px' }}
+      px={{ base: '16px', lg: '80px' }}
+      h={{ base: 'calc(100vh - 62px)', md: 'calc(100vh - 32px)' }}
     >
-      <Heading as='h1'>Profile Page</Heading>
+      <Heading as='h1'>Profile Setting</Heading>
+      <ProfileSetting />
     </VStack>
   );
 };

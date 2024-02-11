@@ -88,9 +88,9 @@ export const RoomList = ({ onDrawerClose }: RoomListProps) => {
                 fontSize='lg'
                 gap='8px'
                 color={room.id === currentRoom?.id ? 'gray.300' : 'gray.400'}
-                bg={room.id === currentRoom?.id ? 'purple.800' : 'gray.800'}
+                bg={room.id === currentRoom?.id ? 'purple.800' : 'transparent'}
                 w='full'
-                _hover={{ textDecoration: 'none', bg: 'gray.700' }}
+                _hover={{ textDecoration: 'none', bg: 'gray.800' }}
               >
                 <FiHash size={20} />
                 {room.name}

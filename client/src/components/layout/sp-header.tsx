@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/react';
 import { Link as ReactRouterLink } from 'react-router-dom';
 import { FiMenu, FiCoffee } from 'react-icons/fi';
-import { AccountBar } from '../account';
+import { ProfileBar } from '../profile';
 import { RoomList } from '../room';
 
 export const SpHeader = () => {
@@ -39,7 +39,7 @@ export const SpHeader = () => {
         Dev Chat
       </ChakraLink>
 
-      <AccountBar />
+      <ProfileBar />
 
       <Drawer isOpen={isOpen} placement='left' onClose={onClose}>
         <DrawerOverlay />

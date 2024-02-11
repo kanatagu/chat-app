@@ -4,7 +4,7 @@ export const HomePage = () => {
   return (
     <VStack
       w='100%'
-      bgColor='gray.700'
+      bgColor='gray.800'
       h={{ base: 'calc(100vh - 64px)', md: 'calc(100vh - 32px)' }}
       align='center'
       justify='center'

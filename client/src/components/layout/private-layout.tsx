@@ -18,7 +18,7 @@ export const PrivateLayout = () => {
 
   return (
     <ErrorBoundary FallbackComponent={ErrorFallback} onError={onError}>
-      <Flex direction='column' minH='100vh' as='main'>
+      <Flex direction='column' minH='100vh' as='main' bgColor='gray.900'>
         <Flex
           flexDir={{ base: 'column', md: 'row' }}
           justifyContent='space-between'

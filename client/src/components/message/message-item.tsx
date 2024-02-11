@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { format, isToday, isYesterday } from 'date-fns';
 import { Flex, Text, Avatar, Box } from '@chakra-ui/react';
-import defaultIcon from '../../assets/account-icon/default.svg';
+import defaultIcon from '../../assets/profile-icon/default.svg';
 
 type MessageItemProps = {
   username: string;
@@ -22,7 +22,7 @@ export const MessageItem = ({
     const fetchIcon = async () => {
       if (!imageIcon) return;
 
-      import(`../../assets/account-icon/${imageIcon}.jpg`).then((module) => {
+      import(`../../assets/profile-icon/${imageIcon}.jpg`).then((module) => {
         setIconSrc(module.default);
       });
     };

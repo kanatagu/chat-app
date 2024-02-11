@@ -1,7 +1,7 @@
 import { Box, Link as ChakraLink, Flex } from '@chakra-ui/react';
 import { Link as ReactRouterLink } from 'react-router-dom';
 import { FiCoffee } from 'react-icons/fi';
-import { AccountBar } from '../account';
+import { ProfileBar } from '../profile';
 import { RoomList } from '../room';
 
 export const Sidebar = () => {
@@ -32,7 +32,7 @@ export const Sidebar = () => {
         <RoomList />
       </Box>
 
-      <AccountBar />
+      <ProfileBar />
     </Flex>
   );
 };

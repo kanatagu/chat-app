@@ -20,6 +20,29 @@ const getUser = async (req, res) => {
 };
 
 /**
+ * @desc     Update user
+ * @route    PUT /api/user
+ * @access   Private
+ */
+const updateUser = async (req, res) => {
+  try {
+    const { id: userId } = req.user;
+    const { username, image_icon } = req.body;
+
+    if (!username) throw new Error('Username is required');
+
+    const user = await pool.query(
+      'UPDATE users SET username = $1, image_icon = $2 WHERE id = $3 RETURNING *',
+      [username, image_icon, userId]
+    );
+
+    return res.status(200).json(user.rows[0]);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+/**
  * @desc     Get User's joined rooms
  * @route    GET /api/user/rooms
  * @access   Private
@@ -108,4 +131,4 @@ const removeRoom = async (req, res) => {
   }
 };
 
-module.exports = { getUser, getJoinedRooms, joinRoom, removeRoom };
+module.exports = { getUser, updateUser, getJoinedRooms, joinRoom, removeRoom };

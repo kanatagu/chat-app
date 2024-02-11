@@ -1,42 +1,42 @@
 export const iconImages = [
   {
     name: 'default',
-    url: '/src/assets/account-icon/default.svg',
+    url: '/src/assets/profile-icon/default.svg',
   },
   {
     name: 'apple',
-    url: '/src/assets/account-icon/apple.jpg',
+    url: '/src/assets/profile-icon/apple.jpg',
   },
   {
     name: 'dog',
-    url: '/src/assets/account-icon/dog.jpg',
+    url: '/src/assets/profile-icon/dog.jpg',
   },
   {
     name: 'leaf',
-    url: '/src/assets/account-icon/leaf.jpg',
+    url: '/src/assets/profile-icon/leaf.jpg',
   },
   {
     name: 'ninja',
-    url: '/src/assets/account-icon/ninja.jpg',
+    url: '/src/assets/profile-icon/ninja.jpg',
   },
   {
     name: 'octopus',
-    url: '/src/assets/account-icon/octopus.jpg',
+    url: '/src/assets/profile-icon/octopus.jpg',
   },
   {
     name: 'orange',
-    url: '/src/assets/account-icon/orange.jpg',
+    url: '/src/assets/profile-icon/orange.jpg',
   },
   {
     name: 'raccoon',
-    url: '/src/assets/account-icon/raccoon.jpg',
+    url: '/src/assets/profile-icon/raccoon.jpg',
   },
   {
     name: 'rocket',
-    url: '/src/assets/account-icon/rocket.jpg',
+    url: '/src/assets/profile-icon/rocket.jpg',
   },
   {
     name: 'strawberry',
-    url: '/src/assets/account-icon/strawberry.jpg',
+    url: '/src/assets/profile-icon/strawberry.jpg',
   },
 ];

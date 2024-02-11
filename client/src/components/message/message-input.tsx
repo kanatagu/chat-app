@@ -21,10 +21,10 @@ export const MessageInput = () => {
     <Flex
       as='form'
       onSubmit={onSendMessageSubmit}
-      bgColor='gray.800'
-      px='10px'
-      pt='10px'
-      pb={{ base: '10px', md: '0px' }}
+      bgColor='gray.900'
+      pt='14px'
+      pb={{ base: '16px', md: '0px' }}
+      px={{ base: '16px', md: '0px' }}
       height='auto'
       gap='12px'
       align='flex-start'
@@ -53,6 +53,7 @@ export const MessageInput = () => {
         borderRadius='full'
         p='0px'
         flexShrink={0}
+        aria-label='Edit message'
         type='submit'
       >
         <FiSend size={24} />

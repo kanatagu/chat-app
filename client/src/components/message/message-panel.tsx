@@ -12,7 +12,7 @@ export const MessagePanel = () => {
     <>
       <VStack
         w='100%'
-        bgColor='gray.700'
+        bgColor='gray.800'
         h={{ base: 'calc(100vh - 62px)', md: 'calc(100vh - 32px)' }}
         align='stretch'
         justify='space-between'
@@ -30,7 +30,7 @@ export const MessagePanel = () => {
             gap='28px'
             mt={{ base: '10px', md: '16px' }}
             overflowY='auto'
-            maxH={{ base: 'calc(100vh - 184px)', md: 'calc(100vh - 168px)' }}
+            maxH={{ base: 'calc(100vh - 194px)', md: 'calc(100vh - 172px)' }}
           >
             {isLoading ? (
               <>

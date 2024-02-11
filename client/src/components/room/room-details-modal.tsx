@@ -96,6 +96,7 @@ export const RoomDetailsModal = ({
                       type='submit'
                       isLoading={isUpdating}
                       isDisabled={isUpdating}
+                      aria-label='Edit name'
                     >
                       <FiSend />
                     </Button>
@@ -126,6 +127,7 @@ export const RoomDetailsModal = ({
                       size='sm'
                       flexShrink={0}
                       onClick={() => setShowEditNameForm(true)}
+                      aria-label='Show edit name form'
                     >
                       <FiEdit />
                     </Button>
@@ -158,7 +160,7 @@ export const RoomDetailsModal = ({
                       flexShrink={0}
                       type='submit'
                       isLoading={isUpdating}
-                      isDisabled={isUpdating}
+                      aria-label='Edit description'
                     >
                       <FiSend />
                     </Button>
@@ -186,6 +188,7 @@ export const RoomDetailsModal = ({
                       size='sm'
                       flexShrink={0}
                       onClick={() => setShowEditDescriptionForm(true)}
+                      aria-label='Show edit description form'
                     >
                       <FiEdit />
                     </Button>

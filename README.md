@@ -16,4 +16,9 @@ npm install
 npm run dev
 ```
 
-## TODO
+## Upcoming features..
+
+- Edit/Delete message
+- Upload image
+- Text Editor for a message
+- Change password and Delete account

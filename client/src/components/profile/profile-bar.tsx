@@ -11,10 +11,10 @@ import {
 import { FiLogOut } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../store';
-import defaultIcon from '../../assets/account-icon/default.svg';
+import defaultIcon from '../../assets/profile-icon/default.svg';
 import { useLogout } from '../../hooks/auth';
 
-export const AccountBar = () => {
+export const ProfileBar = () => {
   const navigate = useNavigate();
 
   const [iconSrc, setIconSrc] = useState(defaultIcon);
@@ -27,7 +27,7 @@ export const AccountBar = () => {
 
       const icon = currentUser.image_icon;
 
-      import(`../../assets/account-icon/${icon}.jpg`).then((module) => {
+      import(`../../assets/profile-icon/${icon}.jpg`).then((module) => {
         setIconSrc(module.default);
       });
     };
