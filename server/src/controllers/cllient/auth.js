@@ -32,32 +32,10 @@ const register = async (req, res) => {
     if (existingUser.rows.length > 0) {
       return res.status(400).json({ message: 'User already exists' });
     }
-
-    // Insert user into db with array of rooms
+    
     const newUser = await client.query(
       'INSERT INTO users (username, hashed_password) VALUES ($1, $2) RETURNING *',
       [username, hashedPassword]
-    );
-
-    // Get rooms created by admin
-    const adminUserId = await client.query(
-      'SELECT id FROM users WHERE username = $1',
-      ['admin']
-    );
-
-    const defaultRooms = await client.query(
-      'SELECT id FROM rooms WHERE created_user_id = $1',
-      [adminUserId.rows[0].id]
-    );
-
-    // Insert default rooms data to user_rooms table
-    await Promise.all(
-      defaultRooms.rows.map((room) =>
-        client.query(
-          'INSERT INTO user_rooms (user_id, room_id) VALUES ($1, $2)',
-          [newUser.rows[0].id, room.id]
-        )
-      )
     );
 
     const token = jwt.sign(

@@ -7,6 +7,7 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { Link as ReactRouterLink } from 'react-router-dom';
+import { FiCoffee } from 'react-icons/fi';
 import { LoginForm } from '../components/auth';
 
 export const LoginPage = () => {
@@ -24,7 +25,21 @@ export const LoginPage = () => {
         w='100%'
         h={{ base: '100%', md: 'auto' }}
       >
-        <Heading textAlign='center'>Login</Heading>
+        <Flex
+          fontSize='2xl'
+          fontWeight='700'
+          color='purple.400'
+          alignItems='center'
+          justifyContent='center'
+          gap='8px'
+          w='full'
+        >
+          <FiCoffee />
+          Dev Chat
+        </Flex>
+        <Heading textAlign='center' mt='20px' fontSize='3xl'>
+          Login
+        </Heading>
         <Box mt={{ base: '30px', md: '40px' }}>
           <LoginForm />
         </Box>

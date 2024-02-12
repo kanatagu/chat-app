@@ -79,7 +79,7 @@ export const ProfileSetting = () => {
             type='submit'
             isLoading={isMutating}
           >
-            Edit Profile
+            Update Profile
           </Button>
         </Box>
       </form>

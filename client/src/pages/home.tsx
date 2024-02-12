@@ -1,6 +1,10 @@
-import { Flex, VStack, Text, Heading } from '@chakra-ui/react';
+import { Flex, VStack, Text, Heading, Button, Box } from '@chakra-ui/react';
+import { MdManageSearch } from 'react-icons/md';
+import { useNavigate } from 'react-router-dom';
 
 export const HomePage = () => {
+  const navigate = useNavigate();
+
   return (
     <VStack
       w='100%'
@@ -19,6 +23,19 @@ export const HomePage = () => {
           ☕
         </Text>
       </Flex>
+      <Box mt='10px'>
+        <Button
+          gap='8px'
+          size='lg'
+          justifyContent='flex-start'
+          onClick={() => {
+            navigate('/all-rooms');
+          }}
+        >
+          <MdManageSearch size={20} />
+          Browse Rooms
+        </Button>
+      </Box>
     </VStack>
   );
 };
