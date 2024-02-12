@@ -1,4 +1,4 @@
-# Chat App
+# Dev Chat App
 
 This app is a real chat app inspired by Slack and Discord created with PostgreSQL, Express.js, React.js and Socket.io. You can play around with the following test user or create a new account after you set up the local environment.
 
