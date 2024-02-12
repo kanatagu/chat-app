@@ -1,7 +1,6 @@
 # Chat App
 
-This app is real chat app inspired by Slack and Discord created with PostgreSQL, Express.js, React.js and Socket.io.
-You can play around with the following test user or create a new account after you set up the local environment.
+This app is a real chat app inspired by Slack and Discord created with PostgreSQL, Express.js, React.js and Socket.io. You can play around with the following test user or create a new account after you set up the local environment.
 
 ```
 username: test_user
@@ -9,8 +8,6 @@ password: password
 ```
 
 <img width="1460" alt="Screenshot 2024-02-11 at 8 29 55 PM" src="https://github.com/kanatagu/chat-app/assets/66394413/7b291985-d649-4ad5-abe8-80c5d92dab98">
-
-
 
 ## Requirements
 
@@ -21,9 +18,10 @@ password: password
 
 ### Env
 
-* Make environment file in both server and client
+- Make environment file in both server and client
 
 server
+
 ```
 PORT=
 
@@ -41,25 +39,29 @@ COOKIE_SECRET_KEY=
 ```
 
 client
+
 ```
 VITE_API_URL="http://[YOUR SERVER URL]/api"
 ```
 
-
 ### Installation
+
 server
+
 ```
 cd server
 npm install
 ```
 
 client
+
 ```
 cd client
 npm install
 ```
 
 ### Database
+
 ```
 cd server
 npm run db:reset
