@@ -2,12 +2,10 @@ import { Socket } from 'socket.io-client';
 import { MessageType } from './index';
 
 type ServerToClientEvents = {
-  noArg: () => void;
-  basicEmit: (a: number, b: string, c: Buffer) => void;
-  withAck: (d: string, callback: (e: number) => void) => void;
-  user_joined: (message: string) => void;
   new_message: (message: MessageType) => void;
   send_message_error: (error: { message: string }) => void;
+  join_room_success: () => void;
+  join_room_error: (error: { message: string }) => void;
 };
 
 type ClientToServerEvents = {
@@ -32,6 +30,16 @@ type ClientToServerEvents = {
   }) => void;
 
   leave_chat: ({ userId, roomId }: { userId: number; roomId: number }) => void;
+
+  join_room: ({
+    userId,
+    roomId,
+    username,
+  }: {
+    userId: number;
+    roomId: number;
+    username: string;
+  }) => void;
 };
 
 export type CustomSocket = Socket<ServerToClientEvents, ClientToServerEvents>;

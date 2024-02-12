@@ -25,45 +25,6 @@ const getMessages = async (req, res) => {
   }
 };
 
-// TODO Delete this
-/**
- * @desc     Create message
- * @route    POST /api/messages
- * @access   Private
- */
-const createMessage = async (req, res) => {
-  try {
-    await validateForm(messageSchema, req.body);
-    const { message } = req.body;
-    const { roomId } = req.query;
-    const { id: userId } = req.user;
-
-    // Room Check
-    const room = await pool.query('SELECT * FROM rooms WHERE id = $1', [
-      roomId,
-    ]);
-
-    if (!room.rows[0]) {
-      throw new Error('Room not found');
-    }
-
-    // Create message
-    const newMessage = await pool.query(
-      'INSERT INTO messages (message, user_id, room_id) VALUES ($1, $2, $3) RETURNING *',
-      [message, userId, roomId]
-    );
-
-    res.status(201).json(newMessage.rows[0]);
-  } catch (error) {
-    if (error.validationError) {
-      // Validation Error
-      return res.status(400).json({ message: error.message });
-    } else {
-      return res.status(500).json({ message: error.message });
-    }
-  }
-};
-
 /**
  * @desc     Update message
  * @route    PUT /api/messages/:id
@@ -143,4 +104,4 @@ const deleteMessage = async (req, res) => {
   }
 };
 
-module.exports = { getMessages, createMessage, updateMessage, deleteMessage };
+module.exports = { getMessages, updateMessage, deleteMessage };

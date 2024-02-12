@@ -63,44 +63,6 @@ const getJoinedRooms = async (req, res) => {
 };
 
 /**
- * @desc     Join room
- * @route    POST /api/user/rooms/:id/join
- * @access   Private
- */
-const joinRoom = async (req, res) => {
-  try {
-    const { id: userId } = req.user;
-    const { id: roomId } = req.params;
-
-    // Check if the room exists
-    const room = await pool.query('SELECT * FROM rooms WHERE id = $1', [
-      roomId,
-    ]);
-
-    if (!room.rows[0]) throw new Error('Room not found');
-
-    // Check if the user already joined the room
-    const joinedRoom = await pool.query(
-      'SELECT * FROM user_rooms WHERE user_id = $1 AND room_id = $2',
-      [userId, roomId]
-    );
-
-    if (joinedRoom.rows[0]) throw new Error('User already joined the room');
-
-    const userRoom = await pool.query(
-      'INSERT INTO user_rooms (user_id, room_id) VALUES ($1, $2) RETURNING *',
-      [userId, roomId]
-    );
-
-    if (!userRoom.rows[0]) throw new Error('Failed to join room');
-
-    return res.status(200).json(userRoom.rows[0]);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
-/**
  * @desc     Remove room
  * @route    POST /api/user/rooms/:id/remove
  * @access   Private
@@ -131,4 +93,4 @@ const removeRoom = async (req, res) => {
   }
 };
 
-module.exports = { getUser, updateUser, getJoinedRooms, joinRoom, removeRoom };
+module.exports = { getUser, updateUser, getJoinedRooms, removeRoom };

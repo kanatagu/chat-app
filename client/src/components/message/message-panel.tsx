@@ -1,8 +1,17 @@
 import { useRef } from 'react';
-import { Box, Flex, VStack, SkeletonCircle, Skeleton } from '@chakra-ui/react';
+import {
+  Box,
+  Flex,
+  VStack,
+  SkeletonCircle,
+  Skeleton,
+  Text,
+} from '@chakra-ui/react';
+import { FiCoffee } from 'react-icons/fi';
 import { MessageItem, MessageInput } from './index';
 import { useDisplayMessages } from '../../hooks/message';
 import { MessageHeader } from './index';
+import { ADMIN_USERNAME } from '../../const';
 
 export const MessagePanel = () => {
   const messagePanelRef = useRef<HTMLDivElement>(null);
@@ -47,15 +56,28 @@ export const MessagePanel = () => {
               </>
             ) : (
               <>
-                {messages.map((message, index) => (
-                  <MessageItem
-                    key={index}
-                    username={message.username}
-                    imageIcon={message.imageIcon}
-                    time={message.time}
-                    message={message.message}
-                  />
-                ))}
+                {messages.map((message, index) => {
+                  if (message.username === ADMIN_USERNAME) {
+                    return (
+                      <Flex w='full' gap='8px' align='center' color='gray.500'>
+                        <Text as='span'>
+                          <FiCoffee size={18} />
+                        </Text>
+
+                        <Text>{message.message}</Text>
+                      </Flex>
+                    );
+                  }
+                  return (
+                    <MessageItem
+                      key={index}
+                      username={message.username}
+                      imageIcon={message.imageIcon}
+                      time={message.time}
+                      message={message.message}
+                    />
+                  );
+                })}
               </>
             )}
           </VStack>

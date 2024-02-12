@@ -30,9 +30,10 @@ const getRoomDetails = async (req, res) => {
       roomId,
     ]);
 
+    // Fetch users in the room except admin
     const users = await pool.query(
-      'SELECT users.username, users.image_icon, users.created_at FROM user_rooms JOIN users ON user_rooms.user_id = users.id WHERE user_rooms.room_id = $1',
-      [roomId]
+      'SELECT users.username, users.image_icon, users.created_at FROM user_rooms JOIN users ON user_rooms.user_id = users.id WHERE user_rooms.room_id = $1 AND users.username != $2',
+      [roomId, 'admin']
     );
 
     const roomDetails = {

@@ -1,4 +1,6 @@
 const { createMessage } = require('./controllers/server/message');
+const { getAdminUserId } = require('./controllers/server/user');
+const { joinRoom } = require('./controllers/server/user-room');
 
 const socketIoHandler = (io) => {
   // Run socketIo when client connects
@@ -7,7 +9,7 @@ const socketIoHandler = (io) => {
 
     // Join the chat
     socket.on('join_chat', async (data) => {
-      const { userId, roomId, username } = data;
+      const { roomId } = data;
 
       socket.join(roomId);
     });
@@ -24,6 +26,37 @@ const socketIoHandler = (io) => {
         const errorMessage = `Failed to save message. ${error.message}`;
 
         socket.emit('send_message_error', {
+          message: errorMessage,
+        });
+        return;
+      }
+    });
+
+    // Join the room (add to userRoom List)
+    socket.on('join_room', async (data) => {
+      const { userId, roomId, username } = data;
+
+      try {
+        await joinRoom(userId, roomId);
+
+        const joinMessage = `${username} has joined the room!`;
+
+        const adminUserId = await getAdminUserId();
+        const newMessage = await createMessage(
+          joinMessage,
+          adminUserId,
+          roomId
+        );
+
+        // Emit a join room success event
+        socket.emit('join_room_success');
+
+        // Emit the new message to all clients in the room
+        io.in(roomId).emit('new_message', newMessage);
+      } catch (error) {
+        const errorMessage = `Failed to join room. ${error.message}`;
+
+        socket.emit('join_room_error', {
           message: errorMessage,
         });
         return;
