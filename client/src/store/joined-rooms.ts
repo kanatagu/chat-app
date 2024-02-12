@@ -7,6 +7,7 @@ type JoinedRoomsStore = {
   joinedRooms: UserRoomType[];
   setJoinedRooms: (joinedRooms: UserRoomType[]) => void;
   getUserJoinedRooms: () => Promise<void>;
+  isLoading: boolean;
 };
 
 export const useJoinedRoomsStore = create<JoinedRoomsStore>()((set) => ({
@@ -17,6 +18,8 @@ export const useJoinedRoomsStore = create<JoinedRoomsStore>()((set) => ({
       .then((res) => set({ joinedRooms: res.data }))
       .catch((error) => {
         useErrorBoundary().showBoundary(error);
-      });
+      })
+      .finally(() => set({ isLoading: false }));
   },
+  isLoading: true,
 }));

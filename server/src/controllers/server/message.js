@@ -4,7 +4,6 @@ const pool = require('../../db/pool');
  * @desc Create Message
  */
 const createMessage = async (message, userId, roomId) => {
-  console.log('createMessage!', message, userId, roomId);
   try {
     // Room Check
     const room = await pool.query('SELECT * FROM rooms WHERE id = $1', [

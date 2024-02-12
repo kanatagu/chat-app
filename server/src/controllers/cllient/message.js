@@ -14,7 +14,7 @@ const getMessages = async (req, res) => {
 
   try {
     const messages = await pool.query(
-      'SELECT messages.*, users.image_icon, users.username  FROM messages LEFT JOIN users ON messages.user_id = users.id WHERE messages.room_id = $1',
+      'SELECT messages.*, users.image_icon, users.username FROM messages LEFT JOIN users ON messages.user_id = users.id WHERE messages.room_id = $1 ORDER BY messages.created_at DESC LIMIT 100',
       [roomId]
     );
 

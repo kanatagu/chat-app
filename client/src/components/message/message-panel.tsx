@@ -1,12 +1,12 @@
+import { useRef } from 'react';
 import { Box, Flex, VStack, SkeletonCircle, Skeleton } from '@chakra-ui/react';
 import { MessageItem, MessageInput } from './index';
 import { useDisplayMessages } from '../../hooks/message';
 import { MessageHeader } from './index';
 
 export const MessagePanel = () => {
-  const { messages, isLoading } = useDisplayMessages();
-
-  console.log('messages', messages);
+  const messagePanelRef = useRef<HTMLDivElement>(null);
+  const { messages, isLoading } = useDisplayMessages(messagePanelRef);
 
   return (
     <>
@@ -30,7 +30,8 @@ export const MessagePanel = () => {
             gap='28px'
             mt={{ base: '10px', md: '16px' }}
             overflowY='auto'
-            maxH={{ base: 'calc(100vh - 194px)', md: 'calc(100vh - 172px)' }}
+            maxH={{ base: 'calc(100vh - 210px)', md: 'calc(100vh - 180px)' }}
+            ref={messagePanelRef}
           >
             {isLoading ? (
               <>

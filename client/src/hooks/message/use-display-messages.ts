@@ -12,7 +12,9 @@ type MessageDisplayType = {
   message: string;
 };
 
-export const useDisplayMessages = () => {
+export const useDisplayMessages = (
+  messagesPanelRef: React.RefObject<HTMLDivElement>
+) => {
   const { roomId } = useParams();
   const { showBoundary } = useErrorBoundary();
   const toast = useToast();
@@ -35,6 +37,12 @@ export const useDisplayMessages = () => {
               message: message.message,
             };
           });
+
+          // Order by time
+          displayMessages.sort((a, b) => {
+            return new Date(a.time).getTime() - new Date(b.time).getTime();
+          });
+          
           setMessages(displayMessages);
           setIsLoading(false);
         }
@@ -86,6 +94,12 @@ export const useDisplayMessages = () => {
       socket.off('send_message_error');
     };
   }, [socket, toast]);
+
+  // Scroll to the most recent message
+  useEffect(() => {
+    if (!messagesPanelRef.current) return;
+    messagesPanelRef.current.scrollTop = messagesPanelRef.current.scrollHeight;
+  }, [messages, messagesPanelRef]);
 
   return {
     messages,

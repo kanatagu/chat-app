@@ -17,6 +17,36 @@ const getRooms = async (req, res) => {
 };
 
 /**
+ * @desc     Get room details
+ * @route    GET /api/rooms/:id
+ * @access   Private
+ */
+const getRoomDetails = async (req, res) => {
+  try {
+    const { id: roomId } = req.params;
+
+    // Fetch room details
+    const room = await pool.query('SELECT * FROM rooms WHERE id = $1', [
+      roomId,
+    ]);
+
+    const users = await pool.query(
+      'SELECT users.username, users.image_icon, users.created_at FROM user_rooms JOIN users ON user_rooms.user_id = users.id WHERE user_rooms.room_id = $1',
+      [roomId]
+    );
+
+    const roomDetails = {
+      ...room.rows[0],
+      users: users.rows,
+    };
+
+    res.status(200).json(roomDetails);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+/**
  * @desc     Create room
  * @route    POST /api/rooms
  * @access   Private
@@ -127,12 +157,16 @@ const deleteRoom = async (req, res) => {
       [roomId]
     );
 
-    console.log('deletedRoom', deletedRoom);
-
     res.status(200).json(deletedRoom.rows[0]);
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
 };
 
-module.exports = { getRooms, createRoom, updateRoom, deleteRoom };
+module.exports = {
+  getRooms,
+  getRoomDetails,
+  createRoom,
+  updateRoom,
+  deleteRoom,
+};

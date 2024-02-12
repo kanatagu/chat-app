@@ -6,8 +6,8 @@ import { ErrorFallback } from '../error';
 
 export const PublicLayout = () => {
   const onError = (error: Error, info: ErrorInfo) => {
-    console.log('error.message', error.message);
-    console.log('info.componentStack:', info.componentStack);
+    console.error('error.message', error.message);
+    console.error('info.componentStack:', info.componentStack);
   };
 
   return (

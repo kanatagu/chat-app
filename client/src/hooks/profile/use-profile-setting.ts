@@ -27,8 +27,6 @@ export const useProfileSetting = () => {
   });
 
   const profileUpdate = async (data: ProfileSchemaType) => {
-    console.log('submit!', data);
-
     try {
       setIsMutating.on();
       await updateUserApi({

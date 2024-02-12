@@ -19,8 +19,6 @@ export const useSendMessage = () => {
   });
 
   const sendMessage = (data: MessageSchemaType) => {
-    console.log('submit!', data);
-
     if (currentRoom && currentUser) {
       socket.emit('send_message', {
         message: data.message,

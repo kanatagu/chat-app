@@ -1,4 +1,4 @@
-import { ErrorInfo } from 'react';
+import { ErrorInfo, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Flex } from '@chakra-ui/react';
 import { ErrorBoundary } from 'react-error-boundary';
@@ -6,15 +6,24 @@ import { ErrorFallback } from '../error';
 import { useSetCurrentRoom } from '../../hooks/room';
 import { useIsMobile } from '../../hooks/common';
 import { Sidebar, SpHeader } from '.';
+import { useJoinedRoomsStore } from '../../store';
 
 export const PrivateLayout = () => {
   const isMobile = useIsMobile();
+  const getUserJoinedRooms = useJoinedRoomsStore(
+    (state) => state.getUserJoinedRooms
+  );
+
+  useEffect(() => {
+    getUserJoinedRooms();
+  }, [getUserJoinedRooms]);
+
+  useSetCurrentRoom();
 
   const onError = (error: Error, info: ErrorInfo) => {
-    console.log('error.message', error.message);
-    console.log('info.componentStack:', info.componentStack);
+    console.error('error.message', error.message);
+    console.error('info.componentStack:', info.componentStack);
   };
-  useSetCurrentRoom();
 
   return (
     <ErrorBoundary FallbackComponent={ErrorFallback} onError={onError}>

@@ -7,7 +7,8 @@ CREATE TABLE users (
   id SERIAL PRIMARY KEY,
   username VARCHAR(30) NOT NULL,
   hashed_password VARCHAR(80) NOT NULL,
-  image_icon VARCHAR(30)
+  image_icon VARCHAR(30),
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE rooms (

@@ -6,11 +6,11 @@ import {
   Flex,
   Skeleton,
 } from '@chakra-ui/react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { FiHash, FiPlus } from 'react-icons/fi';
 import { MdManageSearch } from 'react-icons/md';
 import { RoomCreateModal } from './index';
-import { useJoinedRoomList } from '../../hooks/room';
+import { useJoinedRoomsStore } from '../../store';
 
 type RoomListProps = {
   onDrawerClose?: () => void;
@@ -19,8 +19,18 @@ type RoomListProps = {
 export const RoomList = ({ onDrawerClose }: RoomListProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const navigate = useNavigate();
-  const { joinedRooms, isLoading, currentRoom, roomClickHandler } =
-    useJoinedRoomList(onDrawerClose);
+  const { roomId } = useParams();
+  const roomIdParam = Number(roomId);
+
+  const isLoading = useJoinedRoomsStore((state) => state.isLoading);
+  const joinedRooms = useJoinedRoomsStore((state) => state.joinedRooms);
+
+  const roomClickHandler = (clickedRoomId: number) => {
+    // For SP drawer
+    onDrawerClose && onDrawerClose();
+
+    navigate(`/chat/${clickedRoomId}`);
+  };
 
   return (
     <Box>
@@ -87,10 +97,13 @@ export const RoomList = ({ onDrawerClose }: RoomListProps) => {
                 fontWeight='bold'
                 fontSize='lg'
                 gap='8px'
-                color={room.id === currentRoom?.id ? 'gray.300' : 'gray.400'}
-                bg={room.id === currentRoom?.id ? 'purple.800' : 'transparent'}
+                color={room.id === roomIdParam ? 'gray.300' : 'gray.400'}
+                bg={room.id === roomIdParam ? 'purple.800' : 'transparent'}
                 w='full'
-                _hover={{ textDecoration: 'none', bg: 'gray.800' }}
+                _hover={{
+                  textDecoration: 'none',
+                  bg: room.id === roomIdParam ? 'purple.800' : 'gray.800',
+                }}
               >
                 <FiHash size={20} />
                 {room.name}

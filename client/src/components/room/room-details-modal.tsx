@@ -67,8 +67,12 @@ export const RoomDetailsModal = ({
         <ModalOverlay />
         <ModalContent>
           <ModalCloseButton />
-          <ModalBody py='60px'>
-            <VStack align='stretch' spacing='10px'>
+          <ModalBody py='40px'>
+            <VStack
+              align='stretch'
+              spacing='10px'
+              mt={isCreatedUser ? '20px' : '0px'}
+            >
               {showEditNameForm ? (
                 <form onSubmit={onUpdateRoomSubmit}>
                   <Flex

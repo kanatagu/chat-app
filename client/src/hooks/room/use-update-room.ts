@@ -37,14 +37,13 @@ export const useUpdateRoom = (isOpen: boolean) => {
       reset();
       setValue('name', currentRoom.name);
       setValue('description', currentRoom.description);
+      setShowEditNameForm(false);
+      setShowEditDescriptionForm(false);
     }
   }, [currentRoom, setValue, isOpen, reset]);
 
   const updateRoom = async (data: RoomSchemaType) => {
-    console.log('submit!', data);
     if (showEditNameForm || showEditDescriptionForm) {
-      console.log('submit!!!!!', data);
-
       try {
         setIsMutating.on();
         if (!currentRoom) throw new Error('Room not found');
