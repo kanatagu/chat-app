@@ -34,16 +34,6 @@ app.use(express.json());
 // Parse cookies object
 app.use(cookieParser(process.env.JWT_EXPIRES_IN));
 
-app.get('/', async (req, res) => {
-  try {
-    const users = await pool.query('SELECT * FROM users');
-    res.json(users.rows);
-  } catch (err) {
-    res.status(500).send(err.message || 'Server Error');
-    console.error(err);
-  }
-});
-
 // Router
 app.use('/api/auth', authRouter);
 app.use('/api/rooms', roomRouter);
