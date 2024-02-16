@@ -9,6 +9,12 @@ password: password
 
 <img width="1460" alt="Screenshot 2024-02-11 at 8 29 55 PM" src="https://github.com/kanatagu/chat-app/assets/66394413/7b291985-d649-4ad5-abe8-80c5d92dab98">
 
+
+
+I wrote a tutorial article about this application!
+[Full Stack Chat App with Socket.io](https://dev.to/kana/full-stack-chat-app-with-socketio-5h)
+
+
 ## Requirements
 
 - Node v20.8.0 or above
