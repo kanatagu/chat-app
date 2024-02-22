@@ -6,7 +6,13 @@ type SocketStore = {
   socket: CustomSocket;
   setSocket: (socket: CustomSocket) => void;
 };
+
+const socketURL =
+  process.env.NODE_ENV === 'production'
+    ? '/socket.io'
+    : 'http://localhost:3000';
+
 export const useSocketStore = create<SocketStore>()((set) => ({
-  socket: io('http://localhost:3000'),
+  socket: io(socketURL),
   setSocket: (socket) => set({ socket: socket }),
 }));
