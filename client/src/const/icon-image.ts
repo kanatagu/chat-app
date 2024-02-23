@@ -1,42 +1,53 @@
+import defaultIcon from '../assets/profile-icon/default.svg';
+import apple from '../assets/profile-icon/apple.jpg';
+import dog from '../assets/profile-icon/dog.jpg';
+import leaf from '../assets/profile-icon/leaf.jpg';
+import ninja from '../assets/profile-icon/ninja.jpg';
+import octopus from '../assets/profile-icon/octopus.jpg';
+import orange from '../assets/profile-icon/orange.jpg';
+import raccoon from '../assets/profile-icon/raccoon.jpg';
+import rocket from '../assets/profile-icon/rocket.jpg';
+import strawberry from '../assets/profile-icon/strawberry.jpg';
+
 export const iconImages = [
   {
     name: 'default',
-    url: '/src/assets/profile-icon/default.svg',
+    url: defaultIcon,
   },
   {
     name: 'apple',
-    url: '/src/assets/profile-icon/apple.jpg',
+    url: apple,
   },
   {
     name: 'dog',
-    url: '/src/assets/profile-icon/dog.jpg',
+    url: dog,
   },
   {
     name: 'leaf',
-    url: '/src/assets/profile-icon/leaf.jpg',
+    url: leaf,
   },
   {
     name: 'ninja',
-    url: '/src/assets/profile-icon/ninja.jpg',
+    url: ninja,
   },
   {
     name: 'octopus',
-    url: '/src/assets/profile-icon/octopus.jpg',
+    url: octopus,
   },
   {
     name: 'orange',
-    url: '/src/assets/profile-icon/orange.jpg',
+    url: orange,
   },
   {
     name: 'raccoon',
-    url: '/src/assets/profile-icon/raccoon.jpg',
+    url: raccoon,
   },
   {
     name: 'rocket',
-    url: '/src/assets/profile-icon/rocket.jpg',
+    url: rocket,
   },
   {
     name: 'strawberry',
-    url: '/src/assets/profile-icon/strawberry.jpg',
+    url: strawberry,
   },
 ];

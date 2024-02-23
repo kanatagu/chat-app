@@ -4,7 +4,6 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
 const { Server } = require('socket.io');
-const pool = require('./db/pool');
 const authRouter = require('./router/auth');
 const roomRouter = require('./router/room');
 const userRouter = require('./router/user');
@@ -47,8 +46,6 @@ const io = new Server(server, {
     credentials: true,
   },
 });
-
-console.log('io', io);
 
 socketIoHandler(io);
 

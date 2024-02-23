@@ -19,7 +19,6 @@ export const useDisplayMessages = (
   const { showBoundary } = useErrorBoundary();
   const toast = useToast();
   const socket = useSocketStore((state) => state.socket);
-  console.log('useDisplayMessages.socket', socket);
 
   const [messages, setMessages] = useState<MessageDisplayType[]>([]);
   const [isLoading, setIsLoading] = useState(false);
