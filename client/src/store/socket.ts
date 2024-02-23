@@ -9,15 +9,12 @@ type SocketStore = {
 
 const socketURL =
   process.env.NODE_ENV === 'production'
-    ? '/socket.io'
+    ? 'https://dev-chat.xyz'
     : 'http://localhost:3000';
 
 console.log('socketURL', socketURL);
 
 export const useSocketStore = create<SocketStore>()((set) => ({
-  socket: io(socketURL, {
-    path: '/socket.io',
-    transports: ['websocket', 'polling'],
-  }),
+  socket: io(socketURL),
   setSocket: (socket) => set({ socket: socket }),
 }));
