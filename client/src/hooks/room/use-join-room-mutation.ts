@@ -7,6 +7,7 @@ import { isErrorWithMessage } from '../../utils';
 export const useJoinRoomMutation = () => {
   const toast = useToast();
   const socket = useSocketStore((state) => state.socket);
+  console.log('useJoinRoomMutation.socket', socket);
   const currentUser = useAuthStore((state) => state.currentUser);
 
   const getUserJoinedRooms = useJoinedRoomsStore(

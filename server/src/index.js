@@ -48,6 +48,8 @@ const io = new Server(server, {
   },
 });
 
+console.log('io', io);
+
 socketIoHandler(io);
 
 server.listen(PORT, () => console.log(`Server running on port ${PORT}`));

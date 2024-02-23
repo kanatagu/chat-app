@@ -12,7 +12,12 @@ const socketURL =
     ? '/socket.io'
     : 'http://localhost:3000';
 
+console.log('socketURL', socketURL);
+
 export const useSocketStore = create<SocketStore>()((set) => ({
-  socket: io(socketURL),
+  socket: io(socketURL, {
+    path: '/socket.io',
+    transports: ['websocket', 'polling'],
+  }),
   setSocket: (socket) => set({ socket: socket }),
 }));

@@ -19,6 +19,7 @@ export const useDisplayMessages = (
   const { showBoundary } = useErrorBoundary();
   const toast = useToast();
   const socket = useSocketStore((state) => state.socket);
+  console.log('useDisplayMessages.socket', socket);
 
   const [messages, setMessages] = useState<MessageDisplayType[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -42,7 +43,7 @@ export const useDisplayMessages = (
           displayMessages.sort((a, b) => {
             return new Date(a.time).getTime() - new Date(b.time).getTime();
           });
-          
+
           setMessages(displayMessages);
           setIsLoading(false);
         }
